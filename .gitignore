@@ -1,0 +1,11 @@
+*/__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
+.idea/dataSources.local.xml
+.idea/workspace.xml
+templates/
+/db.sqlite3
+/static/
+/media/
+car/*/migrations/*
+!car/*/migrations/__init__.py

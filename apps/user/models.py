@@ -1,0 +1,49 @@
+from random import randint
+
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
+from django.db import models
+
+from apps.user.manager import TYPE, UserManager
+from apps.core.models import TimeStampedMixin, SoftDeletionMixin
+from apps.info.models import City, Country
+
+
+class User(AbstractBaseUser,
+             PermissionsMixin,
+             TimeStampedMixin,
+             SoftDeletionMixin):
+    phone = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=100)
+    city = models.ForeignKey(City, models.CASCADE)
+    citizenship = models.CharField(max_length=100)  # TODO check
+    dob = models.DateField()
+    is_staff = models.BooleanField(default=False)  # for admin page
+    sms_code = models.CharField(max_length=10, null=True)
+
+    type = models.CharField(max_length=10, choices=TYPE)
+
+    avatar = models.ImageField(upload_to='avatars/', null=True)
+    experience = models.PositiveIntegerField(null=True)
+    raring_sum = models.IntegerField(default=0)
+    raring_count = models.IntegerField(default=0)
+
+    objects = UserManager()
+
+    USERNAME_FIELD = 'phone'
+    REQUIRED_FIELDS = ['name']
+
+    def get_full_name(self):
+        full_name = '%s %s' % (self.name, self.phone)
+        return full_name.strip()
+
+    def get_short_name(self):
+        return self.name
+
+    def send_sms_confirmation(self):
+        sms_code = str(randint(0, 9999)).zfill(4)
+        sms_code = '1111'
+        phone = self.phone
+        # TODO: sent sms to user.phone_number
+        self.sms_code = sms_code
+        self.save()
