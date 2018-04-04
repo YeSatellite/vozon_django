@@ -7,5 +7,5 @@ templates/
 /db.sqlite3
 /static/
 /media/
-car/*/migrations/*
-!car/*/migrations/__init__.py
+apps/*/migrations/*
+!aspa/*/migrations/__init__.py

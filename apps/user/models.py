@@ -25,8 +25,8 @@ class User(AbstractBaseUser,
 
     avatar = models.ImageField(upload_to='avatars/', null=True)
     experience = models.PositiveIntegerField(null=True)
-    raring_sum = models.IntegerField(default=0)
-    raring_count = models.IntegerField(default=0)
+    rating_sum = models.IntegerField(default=0)
+    rating_count = models.IntegerField(default=0)
 
     objects = UserManager()
 

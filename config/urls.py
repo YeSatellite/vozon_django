@@ -21,7 +21,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'client/', include('apps.client.urls')),
+    url(r'', include('apps.client.urls')),
     # url(r'^info/', include('transfer.info.urls')),
     # url(r'^order/', include('transfer.order.urls')),
     # url(r'^carrier/', include('transfer.carrier.urls')),

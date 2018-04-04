@@ -35,7 +35,7 @@ class Order(TimeStampedMixin):
     image1 = models.ImageField(upload_to='cargo/', null=True)
     image2 = models.ImageField(upload_to='cargo/', null=True)
 
-    owner_type = models.IntegerField
+    owner_type = models.IntegerField()
     payment_type = models.IntegerField()
 
     accept_person = models.CharField(max_length=100)
@@ -71,8 +71,14 @@ def status_test(value):
 class Offer(TimeStampedMixin):
     transport = models.ForeignKey(Transport, models.CASCADE)
     order = models.ForeignKey(Order, models.CASCADE, validators=[status_test])
+
     price = models.PositiveIntegerField()
-    extra_info = models.CharField(max_length=1000)
+
+    payment_type = models.PositiveIntegerField()
+    other_service = models.PositiveIntegerField()
+    shipping = models.PositiveIntegerField()
+
+    comment = models.CharField(max_length=1000)
 
     class Meta:
         unique_together = (("transport", "order"),)
