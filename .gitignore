@@ -8,4 +8,4 @@ templates/
 /static/
 /media/
 apps/*/migrations/*
-!aspa/*/migrations/__init__.py
+!apps/*/migrations/__init__.py
