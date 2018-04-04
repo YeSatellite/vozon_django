@@ -69,8 +69,8 @@ class CourierOrderViewSet(ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        queryset = queryset.filter(start_point=self.request.user.city)
         status_ = self.request.query_params.get('status', 'posted')
-        print(status_ == 'posted')
         if status_ == 'posted':
             queryset = queryset.filter(transport=None)
         else:
