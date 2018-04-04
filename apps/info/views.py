@@ -1,3 +1,56 @@
-from django.shortcuts import render
+from rest_framework import filters
+from rest_framework.permissions import AllowAny
+from rest_framework.viewsets import ReadOnlyModelViewSet
 
-# Create your views here.
+from apps.client.models import Transport
+from apps.info.models import City, Country, TransportType, TransportMark, TransportModel, TransportBody, \
+    TransportShippingType
+from apps.info.serializers import CitySerializer, CountrySerializer, TransportTypeSerializer, TransportMarkSerializer, \
+    TransportModelSerializer, TransportBodySerializer, TransportShippingTypeSerializer
+
+
+class CityViewSet(ReadOnlyModelViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = CitySerializer
+    queryset = City.objects.all()
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('^name',)
+
+
+class CountryViewSet(ReadOnlyModelViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = CountrySerializer
+    queryset = Country.objects.all()
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('^name',)
+
+
+class TransportTypeViewSet(ReadOnlyModelViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = TransportTypeSerializer
+    queryset = TransportType.objects.all()
+
+
+class TransportMarkViewSet(ReadOnlyModelViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = TransportMarkSerializer
+    queryset = TransportMark.objects.all()
+
+
+class TransportModelViewSet(ReadOnlyModelViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = TransportModelSerializer
+    queryset = TransportModel.objects.all()
+    filter_fields = ('mark',)
+
+
+class TransportBodyViewSet(ReadOnlyModelViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = TransportBodySerializer
+    queryset = TransportBody.objects.all()
+
+
+class TransportShippingTypeViewSet(ReadOnlyModelViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = TransportShippingTypeSerializer
+    queryset = TransportShippingType.objects.all()

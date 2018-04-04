@@ -2,17 +2,21 @@ from django.db import models
 from rest_framework.exceptions import ValidationError
 
 from apps.core.models import TimeStampedMixin, SoftDeletionMixin
-from apps.info.models import City, TransportType
+from apps.info.models import City, TransportType, TransportModel, TransportBody, TransportShippingType
 from apps.user.models import User
 
 
 class Transport(TimeStampedMixin,
                 SoftDeletionMixin):
     owner = models.ForeignKey(User, models.CASCADE, related_name='transport')
+
     type = models.ForeignKey(TransportType, models.CASCADE)
+    model = models.ForeignKey(TransportModel, models.CASCADE)
+    body = models.ForeignKey(TransportBody, models.CASCADE)
+    shipping_type = models.ForeignKey(TransportShippingType, models.CASCADE)
+
     image1 = models.ImageField(upload_to='transport/', null=True)
     image2 = models.ImageField(upload_to='transport/', null=True)
-    modification = models.TextField()
     number = models.TextField()
     volume = models.FloatField()
     comment = models.CharField(max_length=100)

@@ -35,3 +35,36 @@ class TransportType(TimeStampedMixin,
 
     def __str__(self):
         return str("%s" % self.name)
+
+
+class TransportMark(TimeStampedMixin,
+                    SoftDeletionMixin):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return str("%s" % self.name)
+
+
+class TransportModel(TimeStampedMixin,
+                     SoftDeletionMixin):
+    mark = models.ForeignKey(TransportMark, models.CASCADE)
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class TransportBody(TimeStampedMixin,
+                    SoftDeletionMixin):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return str("%s" % self.name)
+
+
+class TransportShippingType(TimeStampedMixin,
+                            SoftDeletionMixin):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return str("%s" % self.name)

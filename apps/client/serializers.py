@@ -2,22 +2,31 @@
 from rest_framework import serializers
 
 from apps.client.models import Transport, Order, Offer
-from apps.info.models import City, TransportType
-from apps.info.serializers import CitySerializer, TransportTypeSerializer
+from apps.info.models import City, TransportType, TransportShippingType, TransportBody, TransportModel
+from apps.info.serializers import CitySerializer, TransportTypeSerializer, TransportModelSerializer
 from apps.user.serializers import CourierSerializer, ClientSerializer
 
-TRANSPORT_FIELDS = ('id', 'owner', 'type', 'image1', 'image2', 'modification', 'number', 'volume', 'comment',
-                    'type_id')
+TRANSPORT_FIELDS = ('id', 'owner',
+                    'type', 'model', 'body', 'shipping_type',
+                    'type_name', 'model_id', 'body_name', 'shipping_type_name',
+                    'image1', 'image2', 'number', 'volume', 'comment')
 
 
 class TransportSerializer(serializers.ModelSerializer):
     owner = CourierSerializer(read_only=True)
-    type = TransportTypeSerializer(read_only=True)
-    type_id = serializers.IntegerField(write_only=True)
+
+    model = TransportModelSerializer(read_only=True)
+
+    type_name = serializers.ReadOnlyField(source='type.name')
+    body_name = serializers.ReadOnlyField(source='body.name')
+    shipping_type_name = serializers.ReadOnlyField(source='shipping_type.name')
 
     def create(self, validated_data):
         validated_data['owner'] = self.context['request'].user
         validated_data['type'] = TransportType.objects.get(pk=validated_data['type_id'])
+        validated_data['model'] = TransportModel.objects.get(pk=validated_data['model_id'])
+        validated_data['body'] = TransportBody.objects.get(pk=validated_data['body_id'])
+        validated_data['shipping_type'] = TransportShippingType.objects.get(pk=validated_data['shipping_type_id'])
         return super().create(validated_data)
 
     class Meta:

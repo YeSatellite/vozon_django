@@ -41,7 +41,6 @@ class ClientOrderViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsClient]
 
     def get_queryset(self):
-        self.list()
         queryset = super().get_queryset()
         status_ = self.request.query_params.get('status', 'posted')
         queryset = queryset.filter(transport__isnull=(status_ == 'posted'))
