@@ -9,16 +9,15 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_jwt.serializers import jwt_payload_handler
 
-from apps.client.serializers import ClientSerializer
+from apps.user.serializers import RegisterSerializer, UserSerializer
 from .manager import TYPE
 from .models import User
-from .serializers import ClientRegisterSerializer, CourierRegisterSerializer
 
 
-class ClientRegisterAPIView(CreateModelMixin,
-                            GenericAPIView):
+class RegisterAPIView(CreateModelMixin,
+                      GenericAPIView):
     queryset = User.objects.all()
-    serializer_class = ClientRegisterSerializer
+    serializer_class = RegisterSerializer
     permission_classes = (AllowAny,)
     type = TYPE[0][0]
 
@@ -28,10 +27,6 @@ class ClientRegisterAPIView(CreateModelMixin,
         user = self.get_queryset().get(id=response.data['id'])
         user.send_sms_confirmation()
         return response
-
-
-class CourierRegisterAPIView(ClientRegisterAPIView):
-    serializer_class = CourierRegisterSerializer
 
 
 @api_view(["POST"])
@@ -53,7 +48,7 @@ def login(request):
                         status=status.HTTP_401_UNAUTHORIZED)
     user.sms_code = None
     user.save()
-    serializer = ClientSerializer(user, context={"request": request})
+    serializer = UserSerializer(user, context={"request": request})
     data = serializer.data
 
     payload = jwt_payload_handler(user)
