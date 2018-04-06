@@ -13,7 +13,7 @@ class CityViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = CitySerializer
     queryset = City.objects.all()
-    filter_fields = ('mark',)
+    filter_fields = ('region',)
 
 
 class RegionViewSet(ReadOnlyModelViewSet):
