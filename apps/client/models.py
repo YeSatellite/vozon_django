@@ -2,7 +2,7 @@ from django.db import models
 from rest_framework.exceptions import ValidationError
 
 from apps.core.models import TimeStampedMixin, SoftDeletionMixin
-from apps.info.models import City, TransportType, TransportModel, TransportBody, TransportShippingType
+from apps.info.models import City, TransportType, TransportModel, TransportBody, TransportShippingType, PaymentType
 from apps.user.models import User
 
 
@@ -40,7 +40,7 @@ class Order(TimeStampedMixin):
     image2 = models.ImageField(upload_to='cargo/', null=True)
 
     owner_type = models.IntegerField()
-    payment_type = models.IntegerField()
+    payment_type = models.ForeignKey(PaymentType, models.CASCADE, related_name='order_payment_type')
 
     accept_person = models.CharField(max_length=100)
     accept_person_contact = models.CharField(max_length=20)
@@ -78,9 +78,9 @@ class Offer(TimeStampedMixin):
 
     price = models.PositiveIntegerField()
 
-    payment_type = models.PositiveIntegerField()
-    other_service = models.PositiveIntegerField()
-    shipping = models.PositiveIntegerField()
+    payment_type = models.ForeignKey(PaymentType, models.CASCADE)
+    other_service = models.ForeignKey(PaymentType, models.CASCADE)
+    shipping_type = models.ForeignKey(TransportShippingType, models.CASCADE)
 
     comment = models.CharField(max_length=1000)
 
