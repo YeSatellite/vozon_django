@@ -57,6 +57,7 @@ class TransportShippingTypeSerializer(serializers.ModelSerializer):
 
 
 class PaymentTypeSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = PaymentType
         fields = ('id', 'name')

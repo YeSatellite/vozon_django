@@ -38,7 +38,7 @@ ORDER_FIELDS = ('id', 'owner',
                 'start_point', 'end_point', 'start_detail', 'end_detail',
                 'volume', 'mass',
                 'image1', 'image2',
-                'owner_type', 'payment_type',
+                'owner_type', 'payment_type', 'payment_type_name',
                 'accept_person', 'accept_person_contact',
                 'shipping_date', 'shipping_time',
                 'transport', 'price',
@@ -54,6 +54,8 @@ class OrderSerializer(serializers.ModelSerializer):
     start_point_id = serializers.IntegerField(write_only=True)
     end_point_id = serializers.IntegerField(write_only=True)
 
+    payment_type_name = serializers.ReadOnlyField(source='payment_type.name')
+
     class Meta:
         model = Order
         fields = ORDER_FIELDS
@@ -68,7 +70,8 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 TRANSPORT_OFFER_FIELDS = ('id', 'transport', 'order', 'price',
-                          'payment_type', 'other_service', 'shipping',
+                          'payment_type', 'other_service', 'shipping_type',
+                          'payment_type_name', 'other_service_name', 'shipping_type_name',
                           'comment',
                           'transport_id',)
 
@@ -76,6 +79,10 @@ TRANSPORT_OFFER_FIELDS = ('id', 'transport', 'order', 'price',
 class OfferSerializer(serializers.ModelSerializer):
     transport = TransportSerializer(read_only=True)
     transport_id = serializers.IntegerField(write_only=True)
+
+    payment_type_name = serializers.ReadOnlyField(source='payment_type.name')
+    other_service_name = serializers.ReadOnlyField(source='other_service.name')
+    shipping_type_name = serializers.ReadOnlyField(source='shipping_type.name')
 
     class Meta:
         model = Offer
