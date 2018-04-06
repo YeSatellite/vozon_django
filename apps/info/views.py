@@ -4,25 +4,29 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from apps.client.models import Transport
 from apps.info.models import City, Country, TransportType, TransportMark, TransportModel, TransportBody, \
-    TransportShippingType
+    TransportShippingType, Region
 from apps.info.serializers import CitySerializer, CountrySerializer, TransportTypeSerializer, TransportMarkSerializer, \
-    TransportModelSerializer, TransportBodySerializer, TransportShippingTypeSerializer
+    TransportModelSerializer, TransportBodySerializer, TransportShippingTypeSerializer, RegionSerializer
 
 
 class CityViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = CitySerializer
     queryset = City.objects.all()
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('^name',)
+    filter_fields = ('mark',)
+
+
+class RegionViewSet(ReadOnlyModelViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = RegionSerializer
+    queryset = Region.objects.all()
+    filter_fields = ('country',)
 
 
 class CountryViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = CountrySerializer
     queryset = Country.objects.all()
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('^name',)
 
 
 class TransportTypeViewSet(ReadOnlyModelViewSet):

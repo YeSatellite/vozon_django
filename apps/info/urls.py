@@ -1,10 +1,11 @@
 from rest_framework.routers import DefaultRouter
 
 from apps.info.views import CityViewSet, CountryViewSet, TransportTypeViewSet, TransportMarkViewSet, \
-    TransportModelViewSet, TransportBodyViewSet, TransportShippingTypeViewSet
+    TransportModelViewSet, TransportBodyViewSet, TransportShippingTypeViewSet, RegionViewSet
 
 router = DefaultRouter()
 router.register(r'city', CityViewSet, base_name='city')
+router.register(r'region', RegionViewSet, base_name='region')
 router.register(r'country', CountryViewSet, base_name='location')
 router.register(r'transport/type', TransportTypeViewSet, base_name='transport type')
 router.register(r'transport/mark', TransportMarkViewSet, base_name='transport mark')

@@ -2,17 +2,20 @@
 from rest_framework import serializers
 
 from apps.info.models import City, TransportType, Country, TransportMark, TransportModel, TransportBody, \
-    TransportShippingType
+    TransportShippingType, Region
 
 
 class CitySerializer(serializers.ModelSerializer):
-    country = serializers.ReadOnlyField(source='region.country.name')
-    region = serializers.ReadOnlyField(source='region.name')
-
     class Meta:
         model = City
-        fields = ('id', 'name', 'region', 'country')
-        read_only_fields = ('name', 'region', 'country')
+        fields = ('id', 'name', 'region',)
+        read_only_fields = ('name', 'region',)
+
+
+class RegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Region
+        fields = ('id', 'name', 'country')
 
 
 class CountrySerializer(serializers.ModelSerializer):
