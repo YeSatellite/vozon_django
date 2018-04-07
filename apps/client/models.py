@@ -42,7 +42,7 @@ class Order(TimeStampedMixin):
 
     owner_type = models.IntegerField()
     payment_type = models.ForeignKey(PaymentType, models.CASCADE)
-    category = models.ForeignKey(Category, models.CASCADE)
+    category = models.ForeignKey(Category, models.CASCADE, null=True)
 
     accept_person = models.CharField(max_length=100)
     accept_person_contact = models.CharField(max_length=20)
