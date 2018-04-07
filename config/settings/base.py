@@ -117,14 +117,18 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
 
-    # 'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
+    'EXCEPTION_HANDLER': 'apps.core.utils.custom_exception_handler',
 
 }
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1000),
 }
 
+"""
+101 : nomer uzhe bar
+"""
+
 ERROR_CODE = {
-    'phone': 1000,
-    ('phone', 'user with this phone already exists',): 450,
+    # 'phone': 101,
+    ('phone', 'user with this phone already exists.'): 101,
 }

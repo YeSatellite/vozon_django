@@ -22,7 +22,6 @@ class RegisterAPIView(CreateModelMixin,
     type = TYPE[0][0]
 
     def post(self, request, *args, **kwargs):
-        print(request.data)
         response = self.create(request, *args, **kwargs)
         user = self.get_queryset().get(id=response.data['id'])
         user.send_sms_confirmation()

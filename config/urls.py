@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'auth', include('apps.user.urls')),
     url(r'', include('apps.client.urls')),
     url(r'^info/', include('apps.info.urls')),
-    url(r'api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 
 urlpatterns += static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

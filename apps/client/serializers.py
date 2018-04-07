@@ -38,7 +38,7 @@ ORDER_FIELDS = ('id', 'owner',
                 'start_point', 'end_point', 'start_detail', 'end_detail',
                 'volume', 'mass',
                 'image1', 'image2',
-                'owner_type', 'payment_type', 'payment_type_name',
+                'owner_type', 'payment_type', 'payment_type_name', 'category_name',
                 'accept_person', 'accept_person_contact',
                 'shipping_date', 'shipping_time',
                 'transport', 'price',
@@ -55,6 +55,7 @@ class OrderSerializer(serializers.ModelSerializer):
     end_point_id = serializers.IntegerField(write_only=True)
 
     payment_type_name = serializers.ReadOnlyField(source='payment_type.name')
+    category_name = serializers.ReadOnlyField(source='category.name')
 
     class Meta:
         model = Order
@@ -91,7 +92,6 @@ class OfferSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         transport = attrs['transport_id']
-        print(self.get_extra_kwargs())
 
         transport = Transport.objects.get(pk=transport)
         user = self.context['request'].user

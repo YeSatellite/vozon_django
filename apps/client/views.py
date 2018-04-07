@@ -77,7 +77,6 @@ class CourierOrderViewSet(ModelViewSet):
         queryset = super().get_queryset()
         status_ = self.request.query_params.get('status', 'posted')
         transports = Transport.objects.filter(pk=self.request.user.pk)
-        print(transports)
         offers_orders = Offer.objects.all()\
             .filter(transport__owner=self.request.user)\
             .values_list('order', flat=True)

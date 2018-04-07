@@ -84,3 +84,11 @@ class OtherService(TimeStampedMixin,
 
     def __str__(self):
         return str("%s" % self.name)
+
+
+class Category(TimeStampedMixin,
+                      SoftDeletionMixin):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return str("%s" % self.name)

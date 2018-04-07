@@ -15,5 +15,6 @@ router.register(r'transport/body', TransportBodyViewSet, base_name='transport bo
 router.register(r'transport/shipping-type', TransportShippingTypeViewSet, base_name='transport shipping type')
 router.register(r'payment-type', PaymentTypeViewSet, base_name='payment type')
 router.register(r'other-type', OtherServiceViewSet, base_name='other type')
+# router.register(r'category', CategoryViewSet, base_name='category')
 
 urlpatterns = router.urls

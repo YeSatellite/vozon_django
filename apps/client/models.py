@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 
 from apps.core.models import TimeStampedMixin, SoftDeletionMixin
 from apps.info.models import City, TransportType, TransportModel, TransportBody, TransportShippingType, PaymentType, \
-    OtherService
+    OtherService, Category
 from apps.user.models import User
 
 
@@ -41,7 +41,8 @@ class Order(TimeStampedMixin):
     image2 = models.ImageField(upload_to='cargo/', null=True)
 
     owner_type = models.IntegerField()
-    payment_type = models.ForeignKey(PaymentType, models.CASCADE, related_name='order_payment_type')
+    payment_type = models.ForeignKey(PaymentType, models.CASCADE)
+    category = models.ForeignKey(Category, models.CASCADE)
 
     accept_person = models.CharField(max_length=100)
     accept_person_contact = models.CharField(max_length=20)
