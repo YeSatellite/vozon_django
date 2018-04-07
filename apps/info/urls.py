@@ -2,7 +2,7 @@ from rest_framework.routers import DefaultRouter
 
 from apps.info.views import CityViewSet, CountryViewSet, TransportTypeViewSet, TransportMarkViewSet, \
     TransportModelViewSet, TransportBodyViewSet, TransportShippingTypeViewSet, RegionViewSet, PaymentTypeViewSet, \
-    OtherServiceViewSet
+    OtherServiceViewSet, CategoryViewSet
 
 router = DefaultRouter()
 router.register(r'city', CityViewSet, base_name='city')
@@ -15,6 +15,6 @@ router.register(r'transport/body', TransportBodyViewSet, base_name='transport bo
 router.register(r'transport/shipping-type', TransportShippingTypeViewSet, base_name='transport shipping type')
 router.register(r'payment-type', PaymentTypeViewSet, base_name='payment type')
 router.register(r'other-type', OtherServiceViewSet, base_name='other type')
-# router.register(r'category', CategoryViewSet, base_name='category')
+router.register(r'category', CategoryViewSet, base_name='category')
 
 urlpatterns = router.urls
