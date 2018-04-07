@@ -97,7 +97,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # ====================PATH & URL==================== #
 # Static
 STATIC_ROOT = str(BASE_DIR / 'static')
@@ -116,9 +115,16 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+
+    # 'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
 
 }
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1000)
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1000),
+}
+
+ERROR_CODE = {
+    'phone': 1000,
+    ('phone', 'user with this phone already exists',): 450,
 }

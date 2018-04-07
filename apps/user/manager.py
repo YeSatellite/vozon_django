@@ -6,7 +6,7 @@ from apps.info.models import City, Country
 
 TYPE = (
     ('client', 'client'),
-    ('carrier', 'carrier'),
+    ('courier', 'courier'),
 )
 
 
