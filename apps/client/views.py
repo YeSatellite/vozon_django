@@ -76,9 +76,8 @@ class CourierOrderViewSet(ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         status_ = self.request.query_params.get('status', 'posted')
-        transports = Transport.objects.filter(pk=self.request.user.pk)
-        offers_orders = Offer.objects.all()\
-            .filter(transport__owner=self.request.user)\
+        offers_orders = Offer.objects.all() \
+            .filter(transport__owner=self.request.user) \
             .values_list('order', flat=True)
         print(offers_orders)
         if status_ == 'posted':
@@ -86,6 +85,7 @@ class CourierOrderViewSet(ModelViewSet):
             queryset = queryset.filter(transport=None)
             queryset = queryset.exclude(pk__in=offers_orders)
         elif status_ == 'active':
+            transports = Transport.objects.filter(owner=self.request.user)
             queryset = queryset.filter(transport__in=transports)
         else:
             queryset = queryset.filter(pk__in=offers_orders)
