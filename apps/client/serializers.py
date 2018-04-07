@@ -38,7 +38,8 @@ ORDER_FIELDS = ('id', 'owner',
                 'start_point', 'end_point', 'start_detail', 'end_detail',
                 'volume', 'mass',
                 'image1', 'image2',
-                'owner_type', 'payment_type', 'payment_type_name', 'category_name',
+                'owner_type', 'payment_type', 'payment_type_name',
+                'category', 'category_name',
                 'accept_person', 'accept_person_contact',
                 'shipping_date', 'shipping_time',
                 'transport', 'price',
@@ -67,6 +68,7 @@ class OrderSerializer(serializers.ModelSerializer):
         city = City.objects
         validated_data['start_point'] = city.get(pk=validated_data['start_point_id'])
         validated_data['end_point'] = city.get(pk=validated_data['end_point_id'])
+        print(validated_data)
         return super().create(validated_data)
 
 
