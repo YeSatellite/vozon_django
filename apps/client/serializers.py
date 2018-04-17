@@ -1,7 +1,7 @@
 # coding=utf-8
 from rest_framework import serializers
 
-from apps.client.models import Transport, Order, Offer
+from apps.client.models import Transport, Order, Offer, Route
 from apps.info.models import City
 from apps.info.serializers import CitySerializer
 from apps.user.serializers import UserSerializer
@@ -101,3 +101,33 @@ class OfferSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("it is not your transport")
 
         return attrs
+
+
+ROUTE_FIELDS = ('id', 'transport', 'transport_id',
+                'start_point', 'end_point', 'start_point_id', 'end_point_id',
+                'shipping_date', 'shipping_time')
+
+
+class RouteSerializer(serializers.ModelSerializer):
+    transport = TransportSerializer(read_only=True)
+    transport_id = serializers.IntegerField(write_only=True)
+
+    start_point = CitySerializer(read_only=True)
+    end_point = CitySerializer(read_only=True)
+    start_point_id = serializers.IntegerField(write_only=True)
+    end_point_id = serializers.IntegerField(write_only=True)
+
+    class Meta:
+        model = Route
+        fields = ROUTE_FIELDS
+        read_only_fields = ('price',)
+
+    def create(self, validated_data):
+        validated_data['transport'] = Transport.objects.get(owner=self.context['request'].user,
+                                                            pk=validated_data['transport_id'])
+
+        city = City.objects
+        validated_data['start_point'] = city.get(pk=validated_data['start_point_id'])
+        validated_data['end_point'] = city.get(pk=validated_data['end_point_id'])
+        print(validated_data)
+        return super().create(validated_data)

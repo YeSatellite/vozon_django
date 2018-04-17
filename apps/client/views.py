@@ -4,8 +4,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 
-from apps.client.models import Order, Transport, Offer
-from apps.client.serializers import OrderSerializer, TransportSerializer, OfferSerializer
+from apps.client import filters
+from apps.client.models import Order, Transport, Offer, Route
+from apps.client.serializers import OrderSerializer, TransportSerializer, OfferSerializer, RouteSerializer
 from apps.core.permission import IsItOrReadOnly, IsOwnerOrReadOnly, IsCourier, IsClient
 from apps.user.manager import TYPE
 from apps.user.models import User
@@ -39,12 +40,6 @@ class ClientOrderViewSet(ModelViewSet):
     serializer_class = OrderSerializer
     queryset = Order.objects.all().order_by("-created")
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsClient]
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -101,8 +96,25 @@ class CourierOfferViewSet(ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(order=self.kwargs['order'])
-
         return queryset
 
     def perform_create(self, serializer):
         serializer.save(order=Order.objects.get(pk=self.kwargs['order']))
+
+
+class ClientRouteViewSet(ReadOnlyModelViewSet):
+    serializer_class = RouteSerializer
+    queryset = Route.objects.all().order_by("-created")
+    permission_classes = [IsAuthenticated, IsClient]
+    filter_backends = (filters.RouteFilterBackend,)
+
+
+class CourierRouteViewSet(ModelViewSet):
+    serializer_class = RouteSerializer
+    queryset = Route.objects.all().order_by("-created")
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsCourier]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(transport__owner=self.request.user)
+        return queryset

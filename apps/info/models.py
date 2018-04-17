@@ -89,7 +89,7 @@ class OtherService(TimeStampedMixin,
 class Category(TimeStampedMixin,
                       SoftDeletionMixin):
     name = models.CharField(max_length=100, unique=True)
-    icon = models.ImageField()
+    icon = models.ImageField(null=True)
 
     def __str__(self):
         return str("%s" % self.name)
