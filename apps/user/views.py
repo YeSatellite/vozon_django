@@ -37,7 +37,7 @@ def login(request):
     try:
         user = User.objects.get(phone=phone)
     except:
-        return Response({"phone": ["phone don't exit"]},
+        return Response({"phone": ["phone doesn't exist"]},
                         status=status.HTTP_401_UNAUTHORIZED)
     if not user.sms_code:
         return Response({"sms": ["sms didn't send"]},
@@ -65,7 +65,7 @@ def sent_sms(request):
     try:
         user = User.objects.get(phone=phone)
     except:
-        return Response([{"phone": "phone don't exit"}, ],
+        return Response([{"phone": "phone doesn't exist"}, ],
                         status=status.HTTP_401_UNAUTHORIZED)
 
     user.send_sms_confirmation()

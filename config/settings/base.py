@@ -126,9 +126,13 @@ JWT_AUTH = {
 
 """
 101 : nomer uzhe bar
+102 : nomer tirkelmegen
+103 : sms kate
 """
 
 ERROR_CODE = {
     # 'phone': 101,
     ('phone', 'user with this phone already exists.'): 101,
+    ('phone', "phone doesn't exist"): 102,
+    ('sms', 'sms not correct'): 103,
 }

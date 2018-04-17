@@ -96,6 +96,7 @@ class CourierOfferViewSet(ModelViewSet):
     serializer_class = OfferSerializer
     queryset = Offer.objects.all().order_by("-created")
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsCourier]
+    filter_fields = ('order',)
 
     def get_queryset(self):
         queryset = super().get_queryset()
