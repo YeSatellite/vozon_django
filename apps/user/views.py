@@ -40,9 +40,9 @@ def login(request):
     except:
         raise AuthenticationFailed({"phone": ["phone doesn't exist"]})
     if not user.sms_code:
-        return AuthenticationFailed({"sms": ["sms didn't send"]},)
+        raise AuthenticationFailed({"sms": ["sms didn't send"]},)
     if user.sms_code != sms_code:
-        return AuthenticationFailed({"sms": ["sms not correct"]})
+        raise AuthenticationFailed({"sms": ["sms not correct"]})
     user.sms_code = None
     user.save()
     serializer = UserSerializer(user, context={"request": request})
