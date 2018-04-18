@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib.auth.models import update_last_login
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.exceptions import APIException, AuthenticationFailed
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.permissions import AllowAny
@@ -37,14 +38,11 @@ def login(request):
     try:
         user = User.objects.get(phone=phone)
     except:
-        return Response({"phone": ["phone doesn't exist"]},
-                        status=status.HTTP_401_UNAUTHORIZED)
+        raise AuthenticationFailed({"phone": ["phone doesn't exist"]})
     if not user.sms_code:
-        return Response({"sms": ["sms didn't send"]},
-                        status=status.HTTP_401_UNAUTHORIZED)
+        return AuthenticationFailed({"sms": ["sms didn't send"]},)
     if user.sms_code != sms_code:
-        return Response({"sms": ["sms not correct"]},
-                        status=status.HTTP_401_UNAUTHORIZED)
+        return AuthenticationFailed({"sms": ["sms not correct"]})
     user.sms_code = None
     user.save()
     serializer = UserSerializer(user, context={"request": request})
@@ -65,8 +63,7 @@ def sent_sms(request):
     try:
         user = User.objects.get(phone=phone)
     except:
-        return Response([{"phone": "phone doesn't exist"}, ],
-                        status=status.HTTP_401_UNAUTHORIZED)
+        raise AuthenticationFailed({"phone": ["phone doesn't exist"]})
 
     user.send_sms_confirmation()
     return Response({'status': 'sms successfully sent'})

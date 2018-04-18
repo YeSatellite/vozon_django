@@ -8,7 +8,6 @@ def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
     error_code = getattr(settings, 'ERROR_CODE', None)
     assert isinstance(error_code, dict)
-
     if isinstance(exc, exceptions.APIException):
         if isinstance(exc.detail, dict):
             r_error_code = 100

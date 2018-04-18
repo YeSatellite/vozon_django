@@ -1,8 +1,6 @@
 # coding=utf-8
 from rest_framework import filters
 
-from apps.client.models import Route
-
 
 class RouteFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
