@@ -54,7 +54,6 @@ def login(request):
     data['token'] = token.decode('unicode_escape')
     return Response(data)
 
-
 @api_view(["POST"])
 @permission_classes((AllowAny,))
 def sent_sms(request):
