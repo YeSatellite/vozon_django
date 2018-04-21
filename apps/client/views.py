@@ -77,11 +77,11 @@ class CourierOrderViewSet(ModelViewSet):
         print(offers_orders)
         if status_ == 'posted':
             queryset = queryset.filter(start_point=self.request.user.city)
-            queryset = queryset.filter(transport=None)
+            queryset = queryset.filter(offer=None)
             queryset = queryset.exclude(pk__in=offers_orders)
         elif status_ == 'active':
-            transports = Transport.objects.filter(owner=self.request.user)
-            queryset = queryset.filter(transport__in=transports)
+            offers = Offer.objects.filter(transport__owner=self.request.user)
+            queryset = queryset.filter(offer__in=offers)
         else:
             queryset = queryset.filter(pk__in=offers_orders)
         return queryset
