@@ -103,7 +103,7 @@ class CourierOfferViewSet(ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         offer = self.get_queryset().get(order_id=self.kwargs['order'], transport__owner=request.user)
-        serializer = self.get_serializer(offer, many=True)
+        serializer = self.get_serializer(offer)
         return Response(serializer.data)
 
 
