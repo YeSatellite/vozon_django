@@ -102,14 +102,16 @@ class OrderSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
-ROUTE_FIELDS = ('id', 'transport', 'transport_id',
+ROUTE_FIELDS = ('id', 'owner', 'transport', 'transport_id',
                 'start_point', 'end_point', 'start_point_id', 'end_point_id',
                 'shipping_date', 'shipping_time')
 
 
 class RouteSerializer(serializers.ModelSerializer):
     transport = TransportSerializer(read_only=True)
-    transport_id = serializers.IntegerField(write_only=True)
+    transport_id = serializers.IntegerField(write_only=True,required=False)
+
+    owner = UserSerializer(read_only=True)
 
     start_point = CitySerializer(read_only=True)
     end_point = CitySerializer(read_only=True)
@@ -121,12 +123,20 @@ class RouteSerializer(serializers.ModelSerializer):
         fields = ROUTE_FIELDS
         read_only_fields = ('price',)
 
-    def create(self, validated_data):
-        validated_data['transport'] = Transport.objects.get(owner=self.context['request'].user,
-                                                            pk=validated_data['transport_id'])
+    def validate(self, attrs):
+        attrs['owner'] = self.context['request'].user
+        transport_id = attrs.get('transport_id', None)
+        if transport_id is not None:
+            try:
+                transport = Transport.objects.get(pk=transport_id)
+                if transport.owner != attrs['owner']:
+                    raise serializers.ValidationError({'transport_id': ["it is not your transport"]})
+            except Transport.DoesNotExist:
+                raise serializers.ValidationError({'transport_id': ["doesn't exist"]})
+        else:
+            transport = None
+        attrs['transport'] = transport
+        attrs['start_point'] = City.objects.get(pk=attrs['start_point_id'])
+        attrs['end_point'] = City.objects.get(pk=attrs['end_point_id'])
 
-        city = City.objects
-        validated_data['start_point'] = city.get(pk=validated_data['start_point_id'])
-        validated_data['end_point'] = city.get(pk=validated_data['end_point_id'])
-        print(validated_data)
-        return super().create(validated_data)
+        return attrs

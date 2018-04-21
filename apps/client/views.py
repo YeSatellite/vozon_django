@@ -29,11 +29,27 @@ class ClientViewSet(ReadOnlyModelViewSet, mixins.UpdateModelMixin, ):
     queryset = User.objects.filter(type=TYPE[0][0])
     permission_classes = (IsItOrReadOnly,)
 
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+
+        if pk == "current":
+            return self.request.user
+
+        return super().get_object()
+
 
 class CourierViewSet(ReadOnlyModelViewSet, mixins.UpdateModelMixin, ):
     serializer_class = UserSerializer
     queryset = User.objects.filter(type=TYPE[1][1])
     permission_classes = (IsItOrReadOnly,)
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+
+        if pk == 'current':
+            return self.request.user
+
+        return super().get_object()
 
 
 class ClientOrderViewSet(ModelViewSet):
@@ -52,7 +68,7 @@ class ClientOrderViewSet(ModelViewSet):
     def offers(self, request, pk=None):
         if self.request.method == 'GET':
             queryset = Offer.objects.filter(order=pk)
-            serializer = OfferSerializer(queryset, many=True)
+            serializer = OfferSerializer(queryset, many=True, context={"request": request})
             return Response(data=serializer.data)
         elif self.request.method == 'POST':
             offer = Offer.objects.get(pk=self.request.data['offer'])
