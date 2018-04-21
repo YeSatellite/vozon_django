@@ -44,7 +44,7 @@ class ClientOrderViewSet(ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         status_ = self.request.query_params.get('status', 'posted')
-        queryset = queryset.filter(transport__isnull=(status_ == 'posted'))
+        queryset = queryset.filter(offer__isnull=(status_ == 'posted'))
         queryset = queryset.filter(owner=self.request.user)
         return queryset
 

@@ -51,20 +51,18 @@ class Order(TimeStampedMixin):
     shipping_date = models.DateField()
     shipping_time = models.TimeField()
 
-    transport = models.ForeignKey(Transport, models.CASCADE, null=True)
-    price = models.PositiveIntegerField(null=True)
+    offer = models.ForeignKey('Offer', models.CASCADE, null=True, related_name='order_active_offer')
 
     def to_active(self, offer):
-        if self.transport is not None:
+        if self.offer is not None:
             raise ValidationError('client order status is not \'posted\'.')
         if offer.order != self:
             raise ValidationError({'transport_offer': ['offer is not to your order']})
 
-        self.transport = offer.transport
-        self.price = offer.price
+        self.offer = offer
         self.save()
 
-        Offer.objects.filter(order=self).delete()
+        Offer.objects.filter(order=self).exclude(pk=offer.pk).delete()
 
     def __str__(self):
         return "%s_%d" % (self.owner, self.id)
@@ -77,7 +75,7 @@ def status_test(value):
 
 class Offer(TimeStampedMixin):
     transport = models.ForeignKey(Transport, models.CASCADE)
-    order = models.ForeignKey(Order, models.CASCADE, validators=[status_test])
+    order = models.ForeignKey(Order, models.CASCADE, validators=[status_test], related_name='offer_order')
 
     price = models.PositiveIntegerField()
 

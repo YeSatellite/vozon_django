@@ -32,46 +32,6 @@ class TransportSerializer(serializers.ModelSerializer):
 
 # -------------------------------------------
 
-
-ORDER_FIELDS = ('id', 'owner',
-                'title', 'comment',
-                'start_point', 'end_point', 'start_detail', 'end_detail',
-                'volume', 'mass',
-                'image1', 'image2',
-                'owner_type', 'payment_type', 'payment_type_name',
-                'category', 'category_name',
-                'accept_person', 'accept_person_contact',
-                'shipping_date', 'shipping_time',
-                'transport', 'price',
-                'start_point_id', 'end_point_id',)
-
-
-class OrderSerializer(serializers.ModelSerializer):
-    owner = UserSerializer(read_only=True)
-    transport = TransportSerializer(read_only=True)
-
-    start_point = CitySerializer(read_only=True)
-    end_point = CitySerializer(read_only=True)
-    start_point_id = serializers.IntegerField(write_only=True)
-    end_point_id = serializers.IntegerField(write_only=True)
-
-    payment_type_name = serializers.ReadOnlyField(source='payment_type.name')
-    category_name = serializers.ReadOnlyField(source='category.name')
-
-    class Meta:
-        model = Order
-        fields = ORDER_FIELDS
-        read_only_fields = ('price',)
-
-    def create(self, validated_data):
-        validated_data['owner'] = self.context['request'].user
-        city = City.objects
-        validated_data['start_point'] = city.get(pk=validated_data['start_point_id'])
-        validated_data['end_point'] = city.get(pk=validated_data['end_point_id'])
-        print(validated_data)
-        return super().create(validated_data)
-
-
 TRANSPORT_OFFER_FIELDS = ('id', 'transport', 'order', 'price',
                           'payment_type', 'other_service', 'shipping_type',
                           'payment_type_name', 'other_service_name', 'shipping_type_name',
@@ -101,6 +61,45 @@ class OfferSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("it is not your transport")
 
         return attrs
+
+
+ORDER_FIELDS = ('id', 'owner',
+                'title', 'comment',
+                'start_point', 'end_point', 'start_detail', 'end_detail',
+                'volume', 'mass',
+                'image1', 'image2',
+                'owner_type', 'payment_type', 'payment_type_name',
+                'category', 'category_name',
+                'accept_person', 'accept_person_contact',
+                'shipping_date', 'shipping_time',
+                'offer',
+                'start_point_id', 'end_point_id',)
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(read_only=True)
+    offer = OfferSerializer(read_only=True)
+
+    start_point = CitySerializer(read_only=True)
+    end_point = CitySerializer(read_only=True)
+    start_point_id = serializers.IntegerField(write_only=True)
+    end_point_id = serializers.IntegerField(write_only=True)
+
+    payment_type_name = serializers.ReadOnlyField(source='payment_type.name')
+    category_name = serializers.ReadOnlyField(source='category.name')
+
+    class Meta:
+        model = Order
+        fields = ORDER_FIELDS
+        read_only_fields = ('price',)
+
+    def create(self, validated_data):
+        validated_data['owner'] = self.context['request'].user
+        city = City.objects
+        validated_data['start_point'] = city.get(pk=validated_data['start_point_id'])
+        validated_data['end_point'] = city.get(pk=validated_data['end_point_id'])
+        print(validated_data)
+        return super().create(validated_data)
 
 
 ROUTE_FIELDS = ('id', 'transport', 'transport_id',
