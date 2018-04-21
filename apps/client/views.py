@@ -50,15 +50,15 @@ class ClientOrderViewSet(ModelViewSet):
 
     @detail_route(methods=['get', 'post', 'delete'], permission_classes=permission_classes)
     def offers(self, request, pk=None):
-        if request.method == 'GET':
-            offer = Offer.objects.get(order=pk, transport__owner=request.user)
-            serializer = OfferSerializer(offer)
+        if self.request.method == 'GET':
+            queryset = Offer.objects.filter(order=pk)
+            serializer = OfferSerializer(queryset, many=True)
             return Response(data=serializer.data)
-        elif request.method == 'POST':
+        elif self.request.method == 'POST':
             offer = Offer.objects.get(pk=self.request.data['offer'])
             Order.objects.get(pk=pk).to_active(offer)
             return Response(data={'status': 'OK'})
-        elif request.method == 'DELETE':
+        elif self.request.method == 'DELETE':
             Offer.objects.get(pk=self.request.data['offer']).delete()
             return Response(data={'status:': 'deleted'})
 
@@ -100,6 +100,11 @@ class CourierOfferViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(order=Order.objects.get(pk=self.kwargs['order']))
+
+    def list(self, request, *args, **kwargs):
+        offer = self.get_queryset().get(order_id=self.kwargs['order'], transport__owner=request.user)
+        serializer = self.get_serializer(offer, many=True)
+        return Response(serializer.data)
 
 
 class ClientRouteViewSet(ReadOnlyModelViewSet):
