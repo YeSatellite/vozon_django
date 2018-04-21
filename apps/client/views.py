@@ -84,6 +84,7 @@ class CourierOrderViewSet(ModelViewSet):
             queryset = queryset.filter(offer__in=offers)
         else:
             queryset = queryset.filter(pk__in=offers_orders)
+            queryset = queryset.filter(offer__isnull=True)
         return queryset
 
 
