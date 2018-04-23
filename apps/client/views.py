@@ -138,5 +138,5 @@ class CourierRouteViewSet(ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(transport__owner=self.request.user)
+        queryset = queryset.filter(owner=self.request.user)
         return queryset
