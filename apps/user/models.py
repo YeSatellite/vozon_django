@@ -3,6 +3,7 @@ from random import randint
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
+from rest_framework.exceptions import ValidationError
 
 from apps.user.manager import TYPE, UserManager
 from apps.core.models import TimeStampedMixin, SoftDeletionMixin
@@ -10,9 +11,9 @@ from apps.info.models import City, Country
 
 
 class User(AbstractBaseUser,
-             PermissionsMixin,
-             TimeStampedMixin,
-             SoftDeletionMixin):
+           PermissionsMixin,
+           TimeStampedMixin,
+           SoftDeletionMixin):
     phone = models.CharField(max_length=30, unique=True)
     name = models.CharField(max_length=100)
     city = models.ForeignKey(City, models.CASCADE)
@@ -46,4 +47,11 @@ class User(AbstractBaseUser,
         phone = self.phone
         # TODO: sent sms to user.phone_number
         self.sms_code = sms_code
+        self.save()
+
+    def rating_add(self, ration):
+        if self.type != TYPE[1][1]:
+            raise ValidationError('only client, please.')
+        self.rating_count += ration
+        self.rating_count += 1
         self.save()

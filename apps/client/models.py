@@ -64,6 +64,14 @@ class Order(TimeStampedMixin):
 
         Offer.objects.filter(order=self).exclude(pk=offer.pk).delete()
 
+    def to_done(self, ration):
+        if self.offer is None:
+            raise ValidationError('client order status is not \'active\'.')
+
+        self.offer.transport.owner.rating_add(ration)
+        self.offer.delete()
+        self.delete()
+
     def __str__(self):
         return "%s_%d" % (self.owner, self.id)
 

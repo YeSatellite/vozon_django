@@ -78,6 +78,10 @@ class ClientOrderViewSet(ModelViewSet):
             Offer.objects.get(pk=self.request.data['offer']).delete()
             return Response(data={'status:': 'deleted'})
 
+    @detail_route(methods=['post'], permission_classes=permission_classes)
+    def done(self, request, pk=None):
+        Order.objects.get(pk=pk).to_done(self.request.data['ration'])
+        return Response(data={'status': 'OK'})
 
 class CourierOrderViewSet(ModelViewSet):
     serializer_class = OrderSerializer

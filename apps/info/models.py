@@ -93,3 +93,4 @@ class Category(TimeStampedMixin,
 
     def __str__(self):
         return str("%s" % self.name)
+
