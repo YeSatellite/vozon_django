@@ -12,8 +12,8 @@ class RouteFilterBackend(filters.BaseFilterBackend):
         :type queryset: Route.objects
         """
         par = request.query_params
-        type_ = par.get('type', None)
-        if type_ is not None:
+        type_ = par.get('type', -1)
+        if type_ != -1:
             queryset = queryset.filter(transport__type=par['type'])
         else:
             queryset = queryset.filter(transport__isnull=True)

@@ -125,8 +125,8 @@ class RouteSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         attrs['owner'] = self.context['request'].user
-        transport_id = attrs.get('transport_id', None)
-        if transport_id is not None:
+        transport_id = attrs.get('transport_id', -1)
+        if transport_id is not -1:
             try:
                 transport = Transport.objects.get(pk=transport_id)
                 if transport.owner != attrs['owner']:
@@ -140,3 +140,14 @@ class RouteSerializer(serializers.ModelSerializer):
         attrs['end_point'] = City.objects.get(pk=attrs['end_point_id'])
 
         return attrs
+
+
+
+
+
+
+
+
+
+
+
