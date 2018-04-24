@@ -83,6 +83,7 @@ class ClientOrderViewSet(ModelViewSet):
         Order.objects.get(pk=pk).to_done(self.request.data['ration'])
         return Response(data={'status': 'OK'})
 
+
 class CourierOrderViewSet(ModelViewSet):
     serializer_class = OrderSerializer
     queryset = Order.objects.all().order_by("-created")
