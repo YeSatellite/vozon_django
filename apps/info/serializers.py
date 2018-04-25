@@ -11,7 +11,7 @@ class CitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = City
-        fields = ('id', 'name', 'region', 'region_name', 'country_name')
+        fields = ('id', 'name', 'region_name', 'country_name')
 
 
 class RegionSerializer(serializers.ModelSerializer):
