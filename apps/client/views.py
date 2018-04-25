@@ -80,7 +80,7 @@ class ClientOrderViewSet(ModelViewSet):
 
     @detail_route(methods=['post'], permission_classes=permission_classes)
     def done(self, request, pk=None):
-        Order.objects.get(pk=pk).to_done(self.request.data['ration'])
+        Order.objects.get(pk=pk).to_done(int(self.request.data['rating']))
         return Response(data={'status': 'OK'})
 
 
