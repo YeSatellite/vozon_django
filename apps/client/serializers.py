@@ -42,7 +42,7 @@ TRANSPORT_OFFER_FIELDS = ('id', 'transport', 'order', 'price',
 class OfferSerializer(serializers.ModelSerializer):
     transport = TransportSerializer(read_only=True)
     transport_id = serializers.IntegerField(write_only=True)
-    created = serializers.DateField(format="%Y-%m-%d", source='created')
+    created = serializers.DateTimeField(format="%Y-%m-%d")
 
     payment_type_name = serializers.ReadOnlyField(source='payment_type.name')
     other_service_name = serializers.ReadOnlyField(source='other_service.name')
