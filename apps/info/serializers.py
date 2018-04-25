@@ -6,10 +6,12 @@ from apps.info.models import City, TransportType, Country, TransportMark, Transp
 
 
 class CitySerializer(serializers.ModelSerializer):
+    region_name = serializers.ReadOnlyField(source='region.name')
+    country_name = serializers.ReadOnlyField(source='region.country.name')
+
     class Meta:
         model = City
-        fields = ('id', 'name', 'region',)
-        read_only_fields = ('name', 'region',)
+        fields = ('id', 'name', 'region', 'region_name', 'country_name')
 
 
 class RegionSerializer(serializers.ModelSerializer):

@@ -35,7 +35,7 @@ class TransportSerializer(serializers.ModelSerializer):
 TRANSPORT_OFFER_FIELDS = ('id', 'transport', 'order', 'price',
                           'payment_type', 'other_service', 'shipping_type',
                           'payment_type_name', 'other_service_name', 'shipping_type_name',
-                          'comment',
+                          'comment', 'created',
                           'transport_id',)
 
 
