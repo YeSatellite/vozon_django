@@ -42,6 +42,7 @@ TRANSPORT_OFFER_FIELDS = ('id', 'transport', 'order', 'price',
 class OfferSerializer(serializers.ModelSerializer):
     transport = TransportSerializer(read_only=True)
     transport_id = serializers.IntegerField(write_only=True)
+    created = serializers.DateField(format="%Y-%m-%d", source='created')
 
     payment_type_name = serializers.ReadOnlyField(source='payment_type.name')
     other_service_name = serializers.ReadOnlyField(source='other_service.name')
@@ -109,7 +110,7 @@ ROUTE_FIELDS = ('id', 'owner', 'transport', 'transport_id',
 
 class RouteSerializer(serializers.ModelSerializer):
     transport = TransportSerializer(read_only=True)
-    transport_id = serializers.IntegerField(write_only=True,required=False)
+    transport_id = serializers.IntegerField(write_only=True, required=False)
 
     owner = UserSerializer(read_only=True)
 
@@ -140,14 +141,3 @@ class RouteSerializer(serializers.ModelSerializer):
         attrs['end_point'] = City.objects.get(pk=attrs['end_point_id'])
 
         return attrs
-
-
-
-
-
-
-
-
-
-
-
