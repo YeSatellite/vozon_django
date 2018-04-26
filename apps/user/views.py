@@ -1,10 +1,10 @@
 import jwt
 from django.conf import settings
 from django.contrib.auth.models import update_last_login
-from push_notifications.models import GCMDevice, APNSDevice
-from rest_framework import status
+from django.db.models import Q
+from push_notifications.models import APNSDevice
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.exceptions import APIException, AuthenticationFailed
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.permissions import AllowAny
@@ -37,13 +37,14 @@ def login(request):
     sms_code = request.data.get("sms_code")
     phone_type = request.data.get("phone_type")
     device_id = request.data.get("device_id")
+    registration_id = request.data.get("registration_id")
 
     try:
         user = User.objects.get(phone=phone)
     except:
         raise AuthenticationFailed({"phone": ["phone doesn't exist"]})
     if not user.sms_code:
-        raise AuthenticationFailed({"sms": ["sms didn't send"]},)
+        raise AuthenticationFailed({"sms": ["sms didn't send"]}, )
     if user.sms_code != sms_code:
         raise AuthenticationFailed({"sms": ["sms not correct"]})
     user.sms_code = None
@@ -56,11 +57,16 @@ def login(request):
     update_last_login(None, user)
     data['token'] = token.decode('unicode_escape')
 
-    APNSDevice.objects.create(registration_id=data['token'], device_id=device_id, user=user)
-    APNSDevice.objects.filter(user=user).send_message(badge=5, content_available=1, extra={
-        "text": "from Yernar",
-        'type': 'human'}, message={"title": "Game Request", "body": "kaidasin dastan"}
-                   , thread_id="123", sound='chime.aiff')
+    if phone_type == 'IOS':
+        APNSDevice.objects.filter(Q(registration_id=registration_id) |
+                                  Q(device_id=device_id) |
+                                  Q(user=user)).delete()
+        APNSDevice.objects.create(registration_id=registration_id, device_id=device_id, user=user)
+
+    # APNSDevice.objects.send_message(content_available=1, extra={
+    #     "text": "from Yernar",
+    #     'type': 'human'}, message={"title": "Game Request", "body": "kaidasin dastan"}
+    #               , thread_id="123", sound='chime.aiff')
     return Response(data)
 
 
@@ -76,4 +82,3 @@ def sent_sms(request):
 
     user.send_sms_confirmation()
     return Response({'status': 'sms successfully sent'})
-
