@@ -139,5 +139,5 @@ ERROR_CODE = {
 
 PUSH_NOTIFICATIONS_SETTINGS = {
         "APNS_CERTIFICATE": str(BASE_DIR / 'config/certificate.pem'),
-        "APNS_TOPIC": "kz.testPush",
+        "APNS_TOPIC": "kz.YelnurNotification",
 }

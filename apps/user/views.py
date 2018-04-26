@@ -56,8 +56,8 @@ def login(request):
     update_last_login(None, user)
     data['token'] = token.decode('unicode_escape')
 
-    APNSDevice.objects.create(registration_id=data['token'], device_id=device_id, owner=user)
-    APNSDevice.objects.filter(owner=user).send_message(badge=5, content_available=1, extra={
+    APNSDevice.objects.create(registration_id=data['token'], device_id=device_id, user=user)
+    APNSDevice.objects.filter(user=user).send_message(badge=5, content_available=1, extra={
         "text": "from Yernar",
         'type': 'human'}, message={"title": "Game Request", "body": "kaidasin dastan"}
                    , thread_id="123", sound='chime.aiff')
