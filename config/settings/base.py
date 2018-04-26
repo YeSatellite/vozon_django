@@ -135,3 +135,8 @@ ERROR_CODE = {
     ('phone', "phone doesn't exist"): 102,
     ('sms', 'sms not correct'): 103,
 }
+
+PUSH_NOTIFICATIONS_SETTINGS = {
+        "APNS_CERTIFICATE": str(BASE_DIR / 'config/certificate.pem'),
+        "APNS_TOPIC": "kz.testPush",
+}

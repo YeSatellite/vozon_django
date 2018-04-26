@@ -1,6 +1,7 @@
 import jwt
 from django.conf import settings
 from django.contrib.auth.models import update_last_login
+from push_notifications.models import GCMDevice, APNSDevice
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import APIException, AuthenticationFailed
@@ -34,6 +35,8 @@ class RegisterAPIView(CreateModelMixin,
 def login(request):
     phone = request.data.get("phone")
     sms_code = request.data.get("sms_code")
+    phone_type = request.data.get("phone_type")
+    device_id = request.data.get("device_id")
 
     try:
         user = User.objects.get(phone=phone)
@@ -52,6 +55,12 @@ def login(request):
     token = jwt.encode(payload, settings.SECRET_KEY)
     update_last_login(None, user)
     data['token'] = token.decode('unicode_escape')
+
+    APNSDevice.objects.create(registration_id=data['token'], device_id=device_id, owner=user)
+    APNSDevice.objects.filter(owner=user).send_message(badge=5, content_available=1, extra={
+        "text": "from Yernar",
+        'type': 'human'}, message={"title": "Game Request", "body": "kaidasin dastan"}
+                   , thread_id="123", sound='chime.aiff')
     return Response(data)
 
 
