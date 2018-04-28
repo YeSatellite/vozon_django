@@ -6,7 +6,7 @@ After=network.target
 User=car
 Group=www-data
 WorkingDirectory=/home/car/car
-ExecStart=/home/car/.virenv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/car/car/car.sock myproject.wsgi:application
+ExecStart=/home/car/.virenv/car/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/car/car/car.sock myproject.wsgi:application
 
 
 [Install]
