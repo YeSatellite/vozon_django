@@ -1,0 +1,14 @@
+server {
+    listen 8000;
+    server_name 188.166.50.157;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /home/car/car;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/car/car/car.sock;
+    }
+}
