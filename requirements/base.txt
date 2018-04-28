@@ -11,3 +11,6 @@ django-push-notifications==1.6.0
 environ==1.0
 Pillow==5.0.0
 pytz==2018.3
+
+psycopg2==2.7.4
+psycopg2-binary==2.7.4
