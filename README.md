@@ -17,3 +17,6 @@ postgres=#
 
 sudo -H pip3 install --upgrade pip
 sudo -H pip3 install virtualenv
+
+
+ln -s tools/gunicorn.service /etc/systemd/system/
