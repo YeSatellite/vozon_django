@@ -1,0 +1,9 @@
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=car
+Group=www-data
+WorkingDirectory=/home/car/car
+ExecStart=/home/car/.virenv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/car/car/car.sock myproject.wsgi:application
