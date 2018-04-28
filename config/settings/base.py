@@ -55,8 +55,12 @@ TEMPLATES = [
 ]
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(BASE_DIR / 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'car_db',
+        'USER': 'car_user',
+        'PASSWORD': 'tHfNu6K36gJ3yqk8AmAWDD5h28wzuFs8',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 # ====================???==================== #
