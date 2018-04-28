@@ -2,8 +2,15 @@ server {
     listen 8000;
     server_name 188.166.50.157;
 
+    client_max_body_size 75M;
+
     location = /favicon.ico { access_log off; log_not_found off; }
+
     location /static/ {
+        root /home/car/car;
+    }
+
+    location /media/  {
         root /home/car/car;
     }
 
