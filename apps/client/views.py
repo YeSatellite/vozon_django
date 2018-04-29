@@ -96,7 +96,6 @@ class CourierOrderViewSet(ModelViewSet):
         offers_orders = Offer.objects.all() \
             .filter(transport__owner=self.request.user) \
             .values_list('order', flat=True)
-        print(offers_orders)
         if status_ == 'posted':
             queryset = queryset.filter(start_point=self.request.user.city)
             queryset = queryset.filter(offer=None)

@@ -99,7 +99,6 @@ class OrderSerializer(serializers.ModelSerializer):
         city = City.objects
         validated_data['start_point'] = city.get(pk=validated_data['start_point_id'])
         validated_data['end_point'] = city.get(pk=validated_data['end_point_id'])
-        print(validated_data)
         return super().create(validated_data)
 
 

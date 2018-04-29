@@ -12,7 +12,6 @@ def custom_exception_handler(exc, context):
         if isinstance(exc.detail, dict):
             r_error_code = 100
             for key, value in error_code.items():
-                print(type(key))
                 if isinstance(key, str):
                     field = key
                     message = None
