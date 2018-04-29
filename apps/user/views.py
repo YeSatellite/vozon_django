@@ -42,6 +42,7 @@ def login(request):
     phone_type = request.data.get("phone_type")
     device_id = request.data.get("device_id")
     registration_id = request.data.get("registration_id")
+    print(phone_type)
 
     try:
         user = User.objects.get(phone=phone)
@@ -53,7 +54,7 @@ def login(request):
         raise AuthenticationFailed({"sms": ["sms not correct"]})
 
     today = datetime.datetime.now()
-    delta = today -user.modified
+    delta = today - user.modified
     if delta > datetime.timedelta(minutes=2):
         raise AuthenticationFailed({"sms": ["sms code expired"]})
 
