@@ -8,7 +8,7 @@ from rest_framework import exceptions
 from rest_framework.exceptions import ValidationError
 from rest_framework.views import exception_handler
 
-logger = logging.getLogger('project.need')
+norm = logging.getLogger('project.need')
 
 
 def custom_exception_handler(exc, context):

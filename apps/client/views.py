@@ -1,6 +1,6 @@
 # coding=utf-8
 from push_notifications.models import APNSDevice
-from rest_framework import mixins
+from rest_framework import mixins, status
 from rest_framework.decorators import detail_route
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -10,6 +10,7 @@ from apps.client import filters
 from apps.client.models import Order, Transport, Offer, Route
 from apps.client.serializers import OrderSerializer, TransportSerializer, OfferSerializer, RouteSerializer
 from apps.core.permission import IsItOrReadOnly, IsOwnerOrReadOnly, IsCourier, IsClient
+from apps.core.utils import norm
 from apps.user.manager import TYPE
 from apps.user.models import User
 from apps.user.serializers import UserSerializer
@@ -85,6 +86,25 @@ class ClientOrderViewSet(ModelViewSet):
         Order.objects.get(pk=pk).to_done(int(self.request.data['rating']))
         return Response(data={'status': 'OK'})
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+
+        instance = serializer.instance
+
+        APNSDevice.objects.filter(user__type='courier',
+                                  user__city=instance.start_point).send_message(
+            content_available=1, extra=serializer.data
+            , message={
+                "title": "Клиент оформил заказ",
+                "body": instance.title
+            },
+            thread_id="123", sound='chime.aiff')
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 
 class CourierOrderViewSet(ModelViewSet):
     serializer_class = OrderSerializer
@@ -127,22 +147,6 @@ class CourierOfferViewSet(ModelViewSet):
     def list(self, request, *args, **kwargs):
         offer = self.get_queryset().get(order_id=self.kwargs['order'], transport__owner=request.user)
         serializer = self.get_serializer(offer)
-        return Response(serializer.data)
-
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-
-        APNSDevice.objects.filter(user__type='courier',
-                                  user__city=instance.start_point).send_message(
-            content_available=1, extra={
-                serializer.data
-            }, message={
-                "title": "Клиент оформил заказ",
-                "body": instance.title
-            },
-            thread_id="123", sound='chime.aiff')
-
         return Response(serializer.data)
 
 
