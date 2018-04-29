@@ -3,15 +3,16 @@ server {
     server_name 188.166.50.157;
 
     client_max_body_size 75M;
+    charset  utf-8;
 
     location = /favicon.ico { access_log off; log_not_found off; }
 
-    location /static/ {
-        root /home/car/car;
+    location /static {
+        root /home/car/car/static;
     }
 
-    location /media/  {
-        root /home/car/car;
+    location /media  {
+        root /home/car/car/media;
     }
 
     location / {
