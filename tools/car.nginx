@@ -7,12 +7,12 @@ server {
 
     location = /favicon.ico { access_log off; log_not_found off; }
 
-    location /static {
-        alias /home/car/car/static;
+    location /static/ {
+        root /home/car/car;
     }
 
-    location /media  {
-        alias /home/car/car/media;
+    location /media/  {
+        root /home/car/car;
     }
 
     location / {
