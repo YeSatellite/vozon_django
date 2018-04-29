@@ -65,13 +65,13 @@ def login(request):
     update_last_login(None, user)
     data['token'] = token.decode('unicode_escape')
 
-    if phone_type == 'IOS':
+    if phone_type == 'iOS':
         APNSDevice.objects.filter(Q(registration_id=registration_id) |
                                   Q(device_id=device_id) |
                                   Q(user=user)).delete()
         APNSDevice.objects.create(registration_id=registration_id, device_id=device_id, user=user)
 
-    APNSDevice.objects.filter(user=user).send_message(content_available=1, extra={
+    APNSDevice.objects.all().send_message(content_available=1, extra={
         "text": "from Yernar",
         'type': 'human'}, message={"title": "Game Request", "body": "kaidasin dastan"}
                   , thread_id="123", sound='chime.aiff')
