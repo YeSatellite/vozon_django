@@ -5,9 +5,9 @@
 .idea/workspace.xml
 templates/
 /db.sqlite3
-/static/
-/media/
+static/
+media/
 apps/*/migrations/*
 !apps/*/migrations/__init__.py
-/logs/*
+logs/*
 
