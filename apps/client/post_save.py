@@ -14,8 +14,8 @@ def save_profile(sender, instance, **kwargs):
     """
     serializer = OrderSerializer(instance)
 
-    APNSDevice.objects.filter(owner__type='courier',
-                              owner__city=instance.start_point).send_message(
+    APNSDevice.objects.filter(user__type='courier',
+                              user__city=instance.start_point).send_message(
         content_available=1, extra={
             serializer.data
         }, message={

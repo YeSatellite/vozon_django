@@ -3,8 +3,8 @@ from push_notifications.models import APNSDevice
 
 queryset = APNSDevice.objects.all()
 print(len(queryset))
-clients = queryset.filter(owner__type='clients')
-couriers = queryset.filter(owner__type='courier')
+clients = queryset.filter(user__type='clients')
+couriers = queryset.filter(user__type='courier')
 
 print(len(clients))
 print(len(couriers))
