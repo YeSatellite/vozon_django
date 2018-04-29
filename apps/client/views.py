@@ -3,6 +3,7 @@ from push_notifications.models import APNSDevice
 from rest_framework import mixins, status
 from rest_framework.decorators import detail_route
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 
@@ -93,10 +94,12 @@ class ClientOrderViewSet(ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         instance = serializer.instance
-
+        # json = JSONRenderer().render(serializer.data)
         APNSDevice.objects.filter(user__type='courier',
                                   user__city=instance.start_point).send_message(
-            content_available=1, extra=serializer.data
+            content_available=1, extra={
+                'action': "new_order"
+            }
             , message={
                 "title": "Клиент оформил заказ",
                 "body": instance.title
