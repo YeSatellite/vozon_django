@@ -8,11 +8,11 @@ server {
     location = /favicon.ico { access_log off; log_not_found off; }
 
     location /static {
-        root /home/car/car/static;
+        alias /home/car/car/static;
     }
 
     location /media  {
-        root /home/car/car/media;
+        alias /home/car/car/media;
     }
 
     location / {

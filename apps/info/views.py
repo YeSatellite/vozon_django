@@ -1,8 +1,7 @@
-from rest_framework import filters
+# coding=utf-8
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from apps.client.models import Transport
 from apps.info.models import City, Country, TransportType, TransportMark, TransportModel, TransportBody, \
     TransportShippingType, Region, PaymentType, OtherService, Category
 from apps.info.serializers import CitySerializer, CountrySerializer, TransportTypeSerializer, TransportMarkSerializer, \

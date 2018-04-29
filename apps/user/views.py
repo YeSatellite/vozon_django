@@ -1,3 +1,4 @@
+# coding=utf-8
 import jwt
 from django.conf import settings
 from django.contrib.auth.models import update_last_login

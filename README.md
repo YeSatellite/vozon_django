@@ -20,5 +20,11 @@ sudo -H pip3 install virtualenv
 
 
 sudo ln -f tools/gunicorn.service /etc/systemd/system/
+
 sudo ln -f tools/car.nginx /etc/nginx/sites-available/
-sudo ln -s /etc/nginx/sites-available/car.nginx /etc/nginx/sites-enabled
+sudo ln -sf /etc/nginx/sites-available/car.nginx /etc/nginx/sites-enabled
+
+sudo systemctl daemon-reload
+sudo systemctl restart gunicorn
+
+sudo nginx -t && sudo systemctl restart nginx
