@@ -134,7 +134,8 @@ JWT_AUTH = {
 101 : nomer uzhe bar
 102 : nomer tirkelmegen
 103 : sms kate
-103 : bundai nomer jok
+104 : bundai nomer jok
+105 : sms code expired
 """
 
 ERROR_CODE = {
@@ -143,6 +144,7 @@ ERROR_CODE = {
     ('sms', 'sms not correct'): 103,
     ('sms', 'server error'): 100,
     ('sms', 'number do not exist'): 104,
+    ('sms', 'sms code expired'): 105,
 }
 
 PUSH_NOTIFICATIONS_SETTINGS = {

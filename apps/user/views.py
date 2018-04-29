@@ -1,4 +1,5 @@
 # coding=utf-8
+import datetime
 import jwt
 from django.conf import settings
 from django.contrib.auth.models import update_last_login
@@ -48,6 +49,12 @@ def login(request):
         raise AuthenticationFailed({"sms": ["sms didn't send"]}, )
     if user.sms_code != sms_code:
         raise AuthenticationFailed({"sms": ["sms not correct"]})
+
+    today = datetime.datetime.now()
+    delta = today -user.modified
+    if delta > datetime.timedelta(minutes=2):
+        raise AuthenticationFailed({"sms": ["sms code expired"]})
+
     user.sms_code = None
     user.save()
     serializer = UserSerializer(user, context={"request": request})

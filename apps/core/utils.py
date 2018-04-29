@@ -5,7 +5,7 @@ import logging
 import requests
 from django.conf import settings
 from rest_framework import exceptions
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import ValidationError
 from rest_framework.views import exception_handler
 
 logger = logging.getLogger('project.need')
@@ -66,9 +66,9 @@ def sms_sender(phone, message):
     error_code = int(data.get('error_code', -1))
 
     if error_code in [1, 2, 3, 4, 5, 6, 8, 9]:
-        raise NotFound({"sms": ["server error"]})
+        raise ValidationError({"sms": ["server error"]})
 
     if error_code in [7]:
-        raise NotFound({"sms": ["number do not exist"]})
+        raise ValidationError({"sms": ["number do not exist"]})
 
     logger.debug(phone+"@"+message)
