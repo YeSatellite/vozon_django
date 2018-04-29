@@ -6,6 +6,7 @@ import jwt
 from django.conf import settings
 from django.contrib.auth.models import update_last_login
 from django.db.models import Q
+from django.utils.timezone import utc
 from push_notifications.models import APNSDevice
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import AuthenticationFailed
@@ -53,8 +54,8 @@ def login(request):
     if user.sms_code != sms_code:
         raise AuthenticationFailed({"sms": ["sms not correct"]})
 
-    today = datetime.datetime.now()
-    delta = today - user.modified
+    now = datetime.datetime.utcnow().replace(tzinfo=utc)
+    delta = now - user.modified
     if delta > datetime.timedelta(minutes=2):
         raise AuthenticationFailed({"sms": ["sms code expired"]})
 
