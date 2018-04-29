@@ -1,3 +1,3 @@
 # coding=utf-8
-from . import signals
+default_app_config = 'apps.client.apps.ClientConfig'
 
