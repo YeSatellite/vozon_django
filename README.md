@@ -26,6 +26,7 @@ sudo ln -f tools/gunicorn.conf /etc/supervisor/conf.d/
 sudo supervisorctl reread 
 sudo supervisorctl update
 sudo supervisorctl status
+sudo supervisorctl restart all
 
 
 

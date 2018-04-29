@@ -1,5 +1,8 @@
 # coding=utf-8
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from push_notifications.models import APNSDevice
 from rest_framework.exceptions import ValidationError
 
 from apps.core.models import TimeStampedMixin, SoftDeletionMixin
@@ -106,3 +109,5 @@ class Route(TimeStampedMixin):
 
     shipping_date = models.DateField()
     shipping_time = models.TimeField()
+
+

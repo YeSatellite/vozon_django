@@ -1,4 +1,5 @@
 # coding=utf-8
+from push_notifications.models import APNSDevice
 from rest_framework import serializers
 
 from apps.client.models import Transport, Order, Offer, Route
