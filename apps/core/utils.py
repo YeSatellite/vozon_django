@@ -71,5 +71,5 @@ def sms_sender(phone, message):
     if error_code in [7]:
         raise ValidationError({"sms": ["number do not exist"]})
 
-    logger.debug(phone+"@"+message)
+    norm.debug(phone+"@"+message)
     print("bala")
