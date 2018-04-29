@@ -1,5 +1,7 @@
 # coding=utf-8
 import datetime
+import logging
+
 import jwt
 from django.conf import settings
 from django.contrib.auth.models import update_last_login
@@ -65,7 +67,10 @@ def login(request):
     update_last_login(None, user)
     data['token'] = token.decode('unicode_escape')
 
+    logger = logging.getLogger('project.need')
+    logger.debug("phone_type: "+phone_type)
     if phone_type == 'iOS':
+
         APNSDevice.objects.filter(Q(registration_id=registration_id) |
                                   Q(device_id=device_id) |
                                   Q(user=user)).delete()
