@@ -19,14 +19,27 @@ sudo -H pip3 install --upgrade pip
 sudo -H pip3 install virtualenv
 
 
+
+
+https://codingstartups.com/deploy-django-nginx-gunicorn-postgresql-supervisor/
 sudo ln -f tools/gunicorn.conf /etc/supervisor/conf.d/
+sudo supervisorctl reread 
+sudo supervisorctl update
+sudo supervisorctl status
+
+
 
 sudo ln -f tools/car.nginx /etc/nginx/sites-available/
 sudo ln -sf /etc/nginx/sites-available/car.nginx /etc/nginx/sites-enabled
-
-sudo systemctl daemon-reload
-sudo systemctl restart gunicorn
-
 sudo nginx -t && sudo systemctl restart nginx
 
-sudo systemctl restart gunicorn
+
+{
+"error": "invalid number",
+"error_code": 7
+}
+
+{
+"id": 3,
+"cnt": 1
+}

@@ -1,10 +1,11 @@
+# coding=utf-8
 from random import randint
-
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from rest_framework.exceptions import ValidationError
 
+from apps.core.utils import sms_sender
 from apps.user.manager import TYPE, UserManager
 from apps.core.models import TimeStampedMixin, SoftDeletionMixin
 from apps.info.models import City, Country
@@ -43,9 +44,8 @@ class User(AbstractBaseUser,
 
     def send_sms_confirmation(self):
         sms_code = str(randint(0, 9999)).zfill(4)
-        sms_code = '1111'
         phone = self.phone
-        # TODO: sent sms to user.phone_number
+        sms_sender(phone, sms_code)
         self.sms_code = sms_code
         self.save()
 

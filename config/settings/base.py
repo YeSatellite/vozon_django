@@ -130,15 +130,19 @@ JWT_AUTH = {
 }
 
 """
+100 : 
 101 : nomer uzhe bar
 102 : nomer tirkelmegen
 103 : sms kate
+103 : bundai nomer jok
 """
 
 ERROR_CODE = {
     ('phone', 'user with this phone already exists.'): 101,
     ('phone', "phone doesn't exist"): 102,
     ('sms', 'sms not correct'): 103,
+    ('sms', 'server error'): 100,
+    ('sms', 'number do not exist'): 104,
 }
 
 PUSH_NOTIFICATIONS_SETTINGS = {
@@ -165,7 +169,6 @@ LOGGING = {
     'handlers': {
         'console': {
             'level': 'INFO',
-            # 'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
@@ -175,7 +178,15 @@ LOGGING = {
             'filename': str(BASE_DIR / 'logs/log'),
             'maxBytes': 1024 * 1024 * 15,  # 15MB
             'backupCount': 10,
+        },
+        'need': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(BASE_DIR / 'logs/need'),
+            'maxBytes': 1024 * 1024 * 15,  # 15MB
+            'backupCount': 10,
         }
+
     },
     'loggers': {
         'django': {
@@ -183,5 +194,14 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
+        'project.need': {
+            'handlers': ['file', 'console', 'need'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
     },
 }
+
+
+SMSC_LOGIN = 'Vozon'
+SMSC_PASSWORD = 'Darhan987'

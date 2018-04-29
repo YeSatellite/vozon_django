@@ -1,7 +1,14 @@
 # coding=utf-8
+import json
+import logging
+
+import requests
 from django.conf import settings
-from rest_framework import status, exceptions
+from rest_framework import exceptions
+from rest_framework.exceptions import NotFound
 from rest_framework.views import exception_handler
+
+logger = logging.getLogger('project.need')
 
 
 def custom_exception_handler(exc, context):
@@ -34,3 +41,34 @@ def custom_exception_handler(exc, context):
             response['Error-Code'] = r_error_code
 
     return response
+
+
+def sms_sender(phone, message):
+    login = getattr(settings, 'SMSC_LOGIN', None)
+    assert login is not None
+
+    password = getattr(settings, 'SMSC_PASSWORD', None)
+    assert password is not None
+
+    payload = {
+        'login': login,
+        'psw': password,
+        'phones': phone,
+        'mes': message,
+        'fmt': 3,
+        'cost': '1',
+    }
+    r = requests.get('https://smsc.kz/sys/send.php', params=payload)
+
+    print(r.text)
+    data = json.loads(r.text)
+
+    error_code = int(data.get('error_code', -1))
+
+    if error_code in [1, 2, 3, 4, 5, 6, 8, 9]:
+        raise NotFound({"sms": ["server error"]})
+
+    if error_code in [7]:
+        raise NotFound({"sms": ["number do not exist"]})
+
+    logger.debug(phone+"@"+message)

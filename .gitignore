@@ -9,4 +9,4 @@ static/
 media/
 apps/*/migrations/*
 !apps/*/migrations/__init__.py
-logs/*
+logs/
