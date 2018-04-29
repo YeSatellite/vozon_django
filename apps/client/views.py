@@ -1,4 +1,5 @@
 # coding=utf-8
+from push_notifications.models import APNSDevice
 from rest_framework import mixins
 from rest_framework.decorators import detail_route
 from rest_framework.permissions import IsAuthenticated
@@ -126,6 +127,22 @@ class CourierOfferViewSet(ModelViewSet):
     def list(self, request, *args, **kwargs):
         offer = self.get_queryset().get(order_id=self.kwargs['order'], transport__owner=request.user)
         serializer = self.get_serializer(offer)
+        return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+
+        APNSDevice.objects.filter(user__type='courier',
+                                  user__city=instance.start_point).send_message(
+            content_available=1, extra={
+                serializer.data
+            }, message={
+                "title": "Клиент оформил заказ",
+                "body": instance.title
+            },
+            thread_id="123", sound='chime.aiff')
+
         return Response(serializer.data)
 
 
