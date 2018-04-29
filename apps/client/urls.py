@@ -1,6 +1,6 @@
 # coding=utf-8
 from django.conf.urls import url
-from django.urls import path, include
+from django.urls import include
 from rest_framework.routers import DefaultRouter
 
 from .views import ClientViewSet, ClientOrderViewSet, CourierViewSet, CourierOrderViewSet, TransportViewSet, \
