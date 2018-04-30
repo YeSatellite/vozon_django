@@ -51,7 +51,7 @@ def sms_sender(phone, message):
     password = getattr(settings, 'SMSC_PASSWORD', None)
     assert password is not None
 
-    message = 'Vozon\n Ваш код подтверждения\n %s' % message
+    message = 'Vozon: %s' % message
 
     payload = {
         'login': login,
