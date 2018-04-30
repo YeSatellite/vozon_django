@@ -76,6 +76,9 @@ def sms_sender(phone, message):
 
 
 def send_notification(title, body, action, **kwargs):
+
+    norm.debug(APNSDevice.objects.filter(**kwargs))
+
     APNSDevice.objects.filter(**kwargs).send_message(
         content_available=1, extra={
             'action': action
