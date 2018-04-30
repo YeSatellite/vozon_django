@@ -76,7 +76,12 @@ class ClientOrderViewSet(ModelViewSet):
             return Response(data=serializer.data)
         elif self.request.method == 'POST':
             offer = Offer.objects.get(pk=self.request.data['offer'])
-            Order.objects.get(pk=pk).to_active(offer)
+            order = Order.objects.get(pk=pk)
+
+            send_notification("Клиент принял ваше предложение", order.title, 'accept_offer',
+                              user=offer.transport.owner)
+
+            order.to_active(offer)
             return Response(data={'status': 'OK'})
         elif self.request.method == 'DELETE':
             Offer.objects.get(pk=self.request.data['offer']).delete()
@@ -84,7 +89,13 @@ class ClientOrderViewSet(ModelViewSet):
 
     @detail_route(methods=['post'], permission_classes=permission_classes)
     def done(self, request, pk=None):
-        Order.objects.get(pk=pk).to_done(int(self.request.data['rating']))
+        order = Order.objects.get(pk=pk)
+
+        send_notification(order.owner.name, "Оценил вашу услугу", 'done',
+                          user=order.offer.transport.owner)
+
+        order.to_done(int(self.request.data['rating']))
+
         return Response(data={'status': 'OK'})
 
     def create(self, request, *args, **kwargs):

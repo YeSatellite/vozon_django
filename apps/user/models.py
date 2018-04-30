@@ -52,6 +52,6 @@ class User(AbstractBaseUser,
     def rating_add(self, ration):
         if self.type != TYPE[1][1]:
             raise ValidationError('only client, please.')
-        self.rating_count += ration
+        self.rating_sum += ration
         self.rating_count += 1
         self.save()
