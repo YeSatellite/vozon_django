@@ -51,13 +51,15 @@ def sms_sender(phone, message):
     password = getattr(settings, 'SMSC_PASSWORD', None)
     assert password is not None
 
+    message = 'Vozon\n Ваш код подтверждения\n %s' % message
+
     payload = {
         'login': login,
         'psw': password,
         'phones': phone,
         'mes': message,
         'fmt': 3,
-        'cost': '1',
+        # 'cost': '1',
     }
     r = requests.get('https://smsc.kz/sys/send.php', params=payload)
 
@@ -76,7 +78,6 @@ def sms_sender(phone, message):
 
 
 def send_notification(title, body, action, **kwargs):
-
     norm.debug(APNSDevice.objects.filter(**kwargs))
 
     APNSDevice.objects.filter(**kwargs).send_message(
