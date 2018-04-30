@@ -4,6 +4,7 @@ import logging
 
 import requests
 from django.conf import settings
+from push_notifications.models import APNSDevice
 from rest_framework import exceptions
 from rest_framework.exceptions import ValidationError
 from rest_framework.views import exception_handler
@@ -71,5 +72,16 @@ def sms_sender(phone, message):
     if error_code in [7]:
         raise ValidationError({"sms": ["number do not exist"]})
 
-    norm.debug(phone+"@"+message)
-    print("bala")
+    norm.debug(phone + "@" + message)
+
+
+def send_notification(title, body, action, **kwargs):
+    APNSDevice.objects.filter(kwargs).send_message(
+        content_available=1, extra={
+            'action': action
+        }
+        , message={
+            "title": title,
+            "body": body
+        },
+        thread_id="123", sound='chime.aiff')

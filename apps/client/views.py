@@ -11,7 +11,7 @@ from apps.client import filters
 from apps.client.models import Order, Transport, Offer, Route
 from apps.client.serializers import OrderSerializer, TransportSerializer, OfferSerializer, RouteSerializer
 from apps.core.permission import IsItOrReadOnly, IsOwnerOrReadOnly, IsCourier, IsClient
-from apps.core.utils import norm
+from apps.core.utils import norm, send_notification
 from apps.user.manager import TYPE
 from apps.user.models import User
 from apps.user.serializers import UserSerializer
@@ -94,17 +94,9 @@ class ClientOrderViewSet(ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         instance = serializer.instance
-        # json = JSONRenderer().render(serializer.data)
-        APNSDevice.objects.filter(user__type='courier',
-                                  user__city=instance.start_point).send_message(
-            content_available=1, extra={
-                'action': "new_order"
-            }
-            , message={
-                "title": "Клиент оформил заказ",
-                "body": instance.title
-            },
-            thread_id="123", sound='chime.aiff')
+
+        send_notification("Клиент оформил заказ", instance.title, 'new_order',
+                          user__type='courier', user__city=instance.start_point)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
