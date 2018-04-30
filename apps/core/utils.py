@@ -75,6 +75,7 @@ def sms_sender(phone, message):
         raise ValidationError({"sms": ["number do not exist"]})
 
     norm.debug(phone + "@" + message)
+    norm.debug(data)
 
 
 def send_notification(title, body, action, **kwargs):
