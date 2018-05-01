@@ -77,7 +77,7 @@ def login(request):
                                   Q(device_id=device_id) |
                                   Q(user=user)).delete()
 
-        norm.log("New iOs device: %s %s %s" % (registration_id, device_id, user))
+        norm.debug("New iOs device: %s %s %s" % (registration_id, device_id, user))
         APNSDevice.objects.create(registration_id=registration_id, device_id=device_id, user=user)
     return Response(data)
 
