@@ -1,5 +1,7 @@
 # coding=utf-8
 from random import randint
+
+from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
@@ -44,6 +46,11 @@ class User(AbstractBaseUser,
 
     def send_sms_confirmation(self):
         sms_code = str(randint(0, 9999)).zfill(4)
+
+        debug = getattr(settings, 'SMSC_DEBUG', False)
+        if debug:
+            sms_code = '1111'
+
         phone = self.phone
         sms_sender(phone, sms_code)
         self.sms_code = sms_code

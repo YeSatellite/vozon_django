@@ -59,8 +59,12 @@ def sms_sender(phone, message):
         'phones': phone,
         'mes': message,
         'fmt': 3,
-        # 'cost': '1',
     }
+
+    debug = getattr(settings, 'SMSC_DEBUG', False)
+    if debug:
+        payload['cost'] = '1'
+
     r = requests.get('https://smsc.kz/sys/send.php', params=payload)
 
     print(r.text)
@@ -75,7 +79,7 @@ def sms_sender(phone, message):
         raise ValidationError({"sms": ["number do not exist"]})
 
     norm.debug(phone + "@" + message)
-    norm.debug(">>>"+str(data)+"<<<")
+    norm.debug(">>>" + str(data) + "<<<")
 
 
 def send_notification(title, body, action, **kwargs):
