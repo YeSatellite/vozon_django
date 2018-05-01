@@ -16,6 +16,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_jwt.serializers import jwt_payload_handler
 
+from apps.core.utils import norm
 from apps.user.serializers import RegisterSerializer, UserSerializer
 from .manager import TYPE
 from .models import User
@@ -70,12 +71,13 @@ def login(request):
     data['token'] = token.decode('unicode_escape')
 
     logger = logging.getLogger('project.need')
-    logger.debug("phone_type: "+phone_type)
+    logger.debug("phone_type: " + phone_type)
     if phone_type == 'iOS':
-
         APNSDevice.objects.filter(Q(registration_id=registration_id) |
                                   Q(device_id=device_id) |
                                   Q(user=user)).delete()
+
+        norm("New iOs device: %s %s %s" % (registration_id, device_id, user))
         APNSDevice.objects.create(registration_id=registration_id, device_id=device_id, user=user)
     return Response(data)
 
