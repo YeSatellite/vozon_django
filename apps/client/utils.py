@@ -6,18 +6,15 @@ from apps.core.utils import norm
 
 
 def register_push(phone_type, registration_id, user):
+    norm("User {%s} login with {%s}. Device: {%s}" % (user, registration_id, phone_type))
     if phone_type == 'iOS':
         APNSDevice.objects.filter(Q(registration_id=registration_id) |
                                   Q(user=user)).delete()
-
-        norm("New iOs device: %s %s" % (registration_id, user))
         APNSDevice.objects.create(registration_id=registration_id, user=user)
 
     if phone_type == 'Android':
         GCMDevice.objects.filter(Q(registration_id=registration_id) |
                                  Q(user=user)).delete()
-
-        norm("New Android device: %s %s" % (registration_id, user))
         GCMDevice.objects.create(registration_id=registration_id, cloud_message_type="FCM", user=user)
 
 
