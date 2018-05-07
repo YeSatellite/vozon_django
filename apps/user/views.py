@@ -16,6 +16,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_jwt.serializers import jwt_payload_handler
 
+from apps.client.utils import register_push
 from apps.core.utils import norm
 from apps.user.serializers import RegisterSerializer, UserSerializer
 from .manager import TYPE
@@ -42,9 +43,7 @@ def login(request):
     phone = request.data.get("phone")
     sms_code = request.data.get("sms_code")
     phone_type = request.data.get("phone_type")
-    device_id = request.data.get("device_id")
     registration_id = request.data.get("registration_id")
-    print(phone_type)
 
     try:
         user = User.objects.get(phone=phone)
@@ -70,15 +69,8 @@ def login(request):
     update_last_login(None, user)
     data['token'] = token.decode('unicode_escape')
 
-    logger = logging.getLogger('project.need')
-    logger.debug("phone_type: " + phone_type)
-    if phone_type == 'iOS':
-        APNSDevice.objects.filter(Q(registration_id=registration_id) |
-                                  Q(device_id=device_id) |
-                                  Q(user=user)).delete()
+    register_push(phone_type, registration_id, user)
 
-        norm.debug("New iOs device: %s %s %s" % (registration_id, device_id, user))
-        APNSDevice.objects.create(registration_id=registration_id, device_id=device_id, user=user)
     return Response(data)
 
 

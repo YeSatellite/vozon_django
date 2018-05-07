@@ -148,6 +148,7 @@ ERROR_CODE = {
 }
 
 PUSH_NOTIFICATIONS_SETTINGS = {
+    "FCM_API_KEY": "AIzaSyD7QVseWVnGKugOCh2GjU3ST1oUdQJ_TQ0",
     "APNS_CERTIFICATE": str(BASE_DIR / 'config/certificate.pem'),
     "APNS_TOPIC": "kz.YelnurNotification",
 }

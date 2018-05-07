@@ -1,17 +1,15 @@
 # coding=utf-8
-from push_notifications.models import APNSDevice
 from rest_framework import mixins, status
 from rest_framework.decorators import detail_route
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 
 from apps.client import filters
 from apps.client.models import Order, Transport, Offer, Route
 from apps.client.serializers import OrderSerializer, TransportSerializer, OfferSerializer, RouteSerializer
+from apps.client.utils import send_notification
 from apps.core.permission import IsItOrReadOnly, IsOwnerOrReadOnly, IsCourier, IsClient
-from apps.core.utils import norm, send_notification
 from apps.user.manager import TYPE
 from apps.user.models import User
 from apps.user.serializers import UserSerializer
