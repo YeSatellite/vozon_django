@@ -1,3 +1,3 @@
 SHELL=/bin/bash
-MAILTO=yesat
+MAILTO=car
 */5 * * * * source /home/car/.bashrc && source /home/car/.virenv/car/bin/activate && /home/car/car/manage.py runcrons > /home/car/car/logs/cronjob
