@@ -1,6 +1,8 @@
 # coding=utf-8
+from  datetime import datetime, timedelta
 from django_cron import CronJobBase, Schedule
 
+from apps.client.models import Order
 from apps.core.utils import norm
 
 
@@ -9,5 +11,5 @@ class ClearOrderJob(CronJobBase):
     code = 'client.ClearOrderJob'
 
     def do(self):
-        norm("Hello From Saṃsāra")
-
+        how_many_days = 1
+        Order.objects.filter(shipping_date__lte=datetime.now() - timedelta(days=how_many_days)).delete()
