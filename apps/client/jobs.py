@@ -7,7 +7,7 @@ from apps.core.utils import norm
 
 
 class ClearOrderJob(CronJobBase):
-    schedule = Schedule(run_every_mins=1)
+    schedule = Schedule(run_every_mins=4*60)
     code = 'client.ClearOrderJob'
 
     def do(self):
