@@ -21,9 +21,7 @@ def register_push(phone_type, registration_id, user):
 def send_notification(title, body, action, **kwargs):
     APNSDevice.objects.filter(**kwargs).send_message(
         content_available=1,
-        extra={
-            'action': action
-        },
+        extra={'action': action},
         message={
             "title": title,
             "body": body

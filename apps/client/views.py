@@ -140,6 +140,19 @@ class CourierOfferViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsCourier]
     filter_fields = ('order',)
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+
+        instance = serializer.instance
+
+        send_notification("Курьер откликнулся на заявку", instance.order.title, 'response_order',
+                          user=instance.transport.owner)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(order=self.kwargs['order'])
