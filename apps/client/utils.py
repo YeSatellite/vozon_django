@@ -26,10 +26,13 @@ def send_notification(title, body, action, **kwargs):
             "title": title,
             "body": body
         },
-        thread_id="123", sound='chime.aiff')
+        thread_id="123", sound='chime.aiff'
+    )
 
     GCMDevice.objects.filter(**kwargs).send_message(
         body,
         title=title,
         extra={"action": action},
-        badge=1)
+        badge=1,
+        sound="default"
+    )

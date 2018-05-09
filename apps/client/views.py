@@ -149,7 +149,7 @@ class CourierOfferViewSet(ModelViewSet):
         instance = serializer.instance
 
         send_notification("Курьер откликнулся на заявку", instance.order.title, 'response_order',
-                          user=instance.transport.owner)
+                          user=instance.order.owner)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
