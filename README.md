@@ -21,7 +21,7 @@ sudo -H pip3 install virtualenv
 
 
 
-https://codingstartups.com/deploy-django-nginx-gunicorn-postgresql-supervisor/
+https://codingstartups.cpom/deploy-django-nginx-gunicorn-postgresql-supervisor/
 sudo ln -f tools/gunicorn.conf /etc/supervisor/conf.d/
 sudo supervisorctl reread 
 sudo supervisorctl update

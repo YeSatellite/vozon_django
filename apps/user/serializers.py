@@ -1,6 +1,7 @@
 # coding=utf-8
 from rest_framework import serializers
 
+from apps.info.models import City
 from apps.info.serializers import CitySerializer
 from apps.user.manager import TYPE
 from apps.user.models import User
@@ -23,3 +24,14 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class UserSerializer(RegisterSerializer):
     city = CitySerializer(read_only=True)
+    city_id = serializers.IntegerField(write_only=True, required=False)
+
+    def validate(self, attrs):
+        city_id = attrs.get('city_id')
+        if city_id is not None:
+            try:
+                city = City.objects.get(pk=city_id)
+                attrs['city'] = city
+            except City.DoesNotExist:
+                raise serializers.ValidationError({'city_id': ["doesn't exist"]})
+        return attrs

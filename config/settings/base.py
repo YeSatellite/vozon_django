@@ -26,6 +26,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'django_filters',
     'push_notifications',
+    "django_cron",
 ]
 
 LOCAL_APPS = [
