@@ -24,7 +24,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class UserSerializer(RegisterSerializer):
     city = CitySerializer(read_only=True)
-    city_id = serializers.IntegerField(write_only=True, required=False)
+    city_id = serializers.IntegerField(write_only=True, required=False, allow_null=True)
 
     def validate(self, attrs):
         city_id = attrs.get('city_id')
