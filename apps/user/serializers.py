@@ -35,3 +35,6 @@ class UserSerializer(RegisterSerializer):
             except City.DoesNotExist:
                 raise serializers.ValidationError({'city_id': ["doesn't exist"]})
         return attrs
+
+    class Meta(RegisterSerializer.Meta):
+        fields = USER_FIELDS + ("city_id",)
