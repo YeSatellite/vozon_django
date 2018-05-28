@@ -1,6 +1,5 @@
 */__pycache__/
 */*/__pycache__/
-*/*/*/__pycache__/
 .idea/dataSources.local.xml
 .idea/workspace.xml
 templates/
@@ -9,4 +8,4 @@ static/
 media/
 apps/*/migrations/*
 !apps/*/migrations/__init__.py
-logs/
+logs/*
