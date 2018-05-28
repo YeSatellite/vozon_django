@@ -29,7 +29,7 @@ class User(AbstractBaseUser,
     type = models.CharField(max_length=10, choices=TYPE)
 
     experience = models.PositiveIntegerField(null=True)
-    courier_type = models.IntegerField()
+    courier_type = models.IntegerField(null=True)
     rating_sum = models.IntegerField(default=0)
     rating_count = models.IntegerField(default=0)
 
