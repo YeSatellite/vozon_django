@@ -20,15 +20,16 @@ class User(AbstractBaseUser,
     phone = models.CharField(max_length=30, unique=True)
     name = models.CharField(max_length=100)
     city = models.ForeignKey(City, models.CASCADE)
-    citizenship = models.CharField(max_length=100)  # TODO check
     dob = models.DateField()
+    about = models.CharField(max_length=1000)
+    avatar = models.ImageField(upload_to='avatars/', null=True)
     is_staff = models.BooleanField(default=False)  # for admin page
     sms_code = models.CharField(max_length=10, null=True)
 
     type = models.CharField(max_length=10, choices=TYPE)
 
-    avatar = models.ImageField(upload_to='avatars/', null=True)
     experience = models.PositiveIntegerField(null=True)
+    courier_type = models.IntegerField()
     rating_sum = models.IntegerField(default=0)
     rating_count = models.IntegerField(default=0)
 

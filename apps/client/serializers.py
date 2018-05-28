@@ -10,7 +10,7 @@ from apps.user.serializers import UserSerializer
 TRANSPORT_FIELDS = ('id', 'owner',
                     'type', 'model', 'body', 'shipping_type',
                     'type_name', 'mark_name', 'model_name', 'body_name', 'shipping_type_name',
-                    'image1', 'image2', 'number', 'volume', 'comment')
+                    'image1', 'image2', 'number', 'width', 'height', 'length', 'comment')
 
 
 class TransportSerializer(serializers.ModelSerializer):
@@ -68,9 +68,9 @@ class OfferSerializer(serializers.ModelSerializer):
 ORDER_FIELDS = ('id', 'owner',
                 'title', 'comment',
                 'start_point', 'end_point', 'start_detail', 'end_detail',
-                'volume', 'mass',
+                'width', 'height', 'length', 'mass',
                 'image1', 'image2',
-                'owner_type', 'payment_type', 'payment_type_name',
+                'payment_type', 'payment_type_name',
                 'category', 'category_name',
                 'accept_person', 'accept_person_contact',
                 'shipping_date', 'shipping_time',

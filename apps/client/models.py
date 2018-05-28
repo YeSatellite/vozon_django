@@ -23,7 +23,9 @@ class Transport(TimeStampedMixin,
     image1 = models.ImageField(upload_to='transport/', null=True)
     image2 = models.ImageField(upload_to='transport/', null=True)
     number = models.TextField()
-    volume = models.FloatField()
+    width = models.FloatField()
+    height = models.FloatField()
+    length = models.FloatField()
     comment = models.CharField(max_length=100)
 
 
@@ -38,13 +40,14 @@ class Order(TimeStampedMixin):
     start_detail = models.CharField(max_length=100)
     end_detail = models.CharField(max_length=100)
 
-    volume = models.FloatField()
+    width = models.FloatField()
+    height = models.FloatField()
+    length = models.FloatField()
     mass = models.FloatField()
 
     image1 = models.ImageField(upload_to='cargo/', null=True)
     image2 = models.ImageField(upload_to='cargo/', null=True)
 
-    owner_type = models.IntegerField()
     payment_type = models.ForeignKey(PaymentType, models.CASCADE)
     category = models.ForeignKey(Category, models.CASCADE)
 

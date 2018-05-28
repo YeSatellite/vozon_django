@@ -6,7 +6,9 @@ from apps.info.serializers import CitySerializer
 from apps.user.manager import TYPE
 from apps.user.models import User
 
-USER_FIELDS = ('id', 'phone', 'name', 'city', 'citizenship', 'dob', 'type', 'avatar', 'experience', 'rating')
+USER_FIELDS = ('id', 'phone', 'name', 'city', 'about', 'dob', 'avatar',
+               'type',
+               'avatar', 'experience', 'courier_type', 'rating',)
 
 
 class RegisterSerializer(serializers.ModelSerializer):
