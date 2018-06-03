@@ -22,8 +22,8 @@ class RouteFilterBackend(filters.BaseFilterBackend):
         if par.get('end_point', None):
             queryset = queryset.filter(end_point_id=par['end_point'])
         if par.get('start_date', None):
-            queryset = queryset.filter(shipping_date__gte=[par['start_date']])
+            queryset = queryset.filter(shipping_date__gte=par['start_date'])
         if par.get('end_date', None):
-            queryset = queryset.filter(shipping_date__lte=[par['end_date']])
+            queryset = queryset.filter(shipping_date__lte=par['end_date'])
 
         return queryset
