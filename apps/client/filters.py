@@ -13,10 +13,9 @@ class RouteFilterBackend(filters.BaseFilterBackend):
         :type queryset: Route.objects
         """
         par = request.query_params
-        par = {k: lambda x: x[0] for k, v in par.items()}
         norm(par)
         type_ = par.get('type', None)
-        if type_ == -1:
+        if type_ == ['-1']:
             queryset = queryset.filter(transport__isnull=True)
         elif type_:
             queryset = queryset.filter(transport__model__type=type_)
@@ -33,4 +32,4 @@ class RouteFilterBackend(filters.BaseFilterBackend):
 
 
 def f(value):
-    return value and value != '0'
+    return value and value != ['0'] and value != ['']
