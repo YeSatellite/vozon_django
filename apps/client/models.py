@@ -104,7 +104,7 @@ class Offer(TimeStampedMixin):
 
 class Route(TimeStampedMixin):
     owner = models.ForeignKey(User, models.CASCADE)
-    transport = models.ForeignKey(Transport, models.CASCADE, related_name='route_transport')
+    transport = models.ForeignKey(Transport, models.CASCADE, related_name='route_transport', null=True)
 
     start_point = models.ForeignKey(City, models.CASCADE, related_name='route_start_point')
     end_point = models.ForeignKey(City, models.CASCADE, related_name='route_end_point')
