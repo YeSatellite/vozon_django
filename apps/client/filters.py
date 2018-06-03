@@ -16,16 +16,22 @@ class RouteFilterBackend(filters.BaseFilterBackend):
         norm(par)
         type_ = par.get('type', None)
         if type_ == ['-1']:
+            norm("$1")
             queryset = queryset.filter(transport__isnull=True)
         elif type_:
+            norm("$2")
             queryset = queryset.filter(transport__model__type=type_)
         if f(par.get('start_point', None)):
+            norm("$3")
             queryset = queryset.filter(start_point_id=par['start_point'])
         if f(par.get('end_point', None)):
+            norm("$4")
             queryset = queryset.filter(end_point_id=par['end_point'])
         if f(par.get('start_date', None)):
+            norm("$5")
             queryset = queryset.filter(shipping_date__gte=par['start_date'])
         if f(par.get('end_date', None)):
+            norm("$6")
             queryset = queryset.filter(shipping_date__lte=par['end_date'])
 
         return queryset
