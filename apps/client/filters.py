@@ -18,7 +18,7 @@ class RouteFilterBackend(filters.BaseFilterBackend):
         if type_ == ['-1']:
             norm("$1")
             queryset = queryset.filter(transport__isnull=True)
-        elif type_:
+        elif f(type_):
             norm("$2")
             queryset = queryset.filter(transport__model__type=type_)
         if f(par.get('start_point', None)):
