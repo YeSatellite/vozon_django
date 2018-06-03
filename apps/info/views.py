@@ -6,7 +6,7 @@ from apps.info.models import City, Country, TransportType, TransportMark, Transp
     TransportShippingType, Region, PaymentType, OtherService, Category
 from apps.info.serializers import CitySerializer, CountrySerializer, TransportMarkSerializer, \
     TransportModelSerializer, TransportBodySerializer, TransportShippingTypeSerializer, RegionSerializer, \
-    PaymentTypeSerializer, OtherServiceSerializer, CategorySerializer, CountryPhoneSerializer
+    PaymentTypeSerializer, OtherServiceSerializer, CategorySerializer, CountryPhoneSerializer, TransportTypeSerializer
 
 
 class CityViewSet(ReadOnlyModelViewSet):
@@ -33,6 +33,12 @@ class CountryPhoneViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = CountryPhoneSerializer
     queryset = Country.objects.all()
+
+
+class TransportTypeViewSet(ReadOnlyModelViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = TransportTypeSerializer
+    queryset = TransportType.objects.all()
 
 
 class TransportMarkViewSet(ReadOnlyModelViewSet):
