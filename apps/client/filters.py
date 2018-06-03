@@ -32,4 +32,4 @@ class RouteFilterBackend(filters.BaseFilterBackend):
 
 
 def f(value):
-    return value and value != '0'
+    return value and value != ['0']
