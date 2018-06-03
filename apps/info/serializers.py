@@ -26,10 +26,10 @@ class CountrySerializer(serializers.ModelSerializer):
         fields = ('id', 'name',)
 
 
-class TransportTypeSerializer(serializers.ModelSerializer):
+class CountryPhoneSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TransportType
-        fields = ('id', 'name')
+        model = Country
+        fields = ('id', 'name', 'phone_code', 'phone_mask')
 
 
 class TransportMarkSerializer(serializers.ModelSerializer):
@@ -39,11 +39,9 @@ class TransportMarkSerializer(serializers.ModelSerializer):
 
 
 class TransportModelSerializer(serializers.ModelSerializer):
-    mark_name = serializers.ReadOnlyField(source='mark.name')
-
     class Meta:
         model = TransportModel
-        fields = ('id', 'name', 'mark', 'mark_name')
+        fields = ('id', 'name', 'mark')
 
 
 class TransportBodySerializer(serializers.ModelSerializer):

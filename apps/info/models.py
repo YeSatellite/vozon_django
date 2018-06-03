@@ -7,6 +7,8 @@ from apps.core.models import TimeStampedMixin, SoftDeletionMixin
 class Country(TimeStampedMixin,
               SoftDeletionMixin):
     name = models.CharField(max_length=100, unique=True)
+    phone_code = models.CharField(max_length=10, unique=True)
+    phone_mask = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return str(self.name)
@@ -48,6 +50,7 @@ class TransportMark(TimeStampedMixin,
 
 class TransportModel(TimeStampedMixin,
                      SoftDeletionMixin):
+    type = models.ForeignKey(TransportType, models.CASCADE)
     mark = models.ForeignKey(TransportMark, models.CASCADE)
     name = models.CharField(max_length=100, unique=True)
 
@@ -88,10 +91,9 @@ class OtherService(TimeStampedMixin,
 
 
 class Category(TimeStampedMixin,
-                      SoftDeletionMixin):
+               SoftDeletionMixin):
     name = models.CharField(max_length=100, unique=True)
     icon = models.ImageField(null=True)
 
     def __str__(self):
         return str("%s" % self.name)
-

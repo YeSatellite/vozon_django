@@ -8,7 +8,7 @@ from apps.info.serializers import CitySerializer
 from apps.user.serializers import UserSerializer
 
 TRANSPORT_FIELDS = ('id', 'owner',
-                    'type', 'model', 'body', 'shipping_type',
+                    'model', 'body', 'shipping_type',
                     'type_name', 'mark_name', 'model_name', 'body_name', 'shipping_type_name',
                     'image1', 'image2', 'number', 'width', 'height', 'length', 'comment')
 
@@ -16,7 +16,7 @@ TRANSPORT_FIELDS = ('id', 'owner',
 class TransportSerializer(serializers.ModelSerializer):
     owner = UserSerializer(read_only=True)
 
-    type_name = serializers.ReadOnlyField(source='type.name')
+    type_name = serializers.ReadOnlyField(source='model.type.name')
     mark_name = serializers.ReadOnlyField(source='model.mark.name')
     model_name = serializers.ReadOnlyField(source='model.name')
     body_name = serializers.ReadOnlyField(source='body.name')
@@ -105,7 +105,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
 ROUTE_FIELDS = ('id', 'owner', 'transport', 'transport_id',
                 'start_point', 'end_point', 'start_point_id', 'end_point_id',
-                'shipping_date', 'shipping_time')
+                'shipping_date', 'shipping_time', 'comment')
 
 
 class RouteSerializer(serializers.ModelSerializer):

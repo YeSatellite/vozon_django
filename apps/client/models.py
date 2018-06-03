@@ -15,7 +15,6 @@ class Transport(TimeStampedMixin,
                 SoftDeletionMixin):
     owner = models.ForeignKey(User, models.CASCADE, related_name='transport')
 
-    type = models.ForeignKey(TransportType, models.CASCADE)
     model = models.ForeignKey(TransportModel, models.CASCADE)
     body = models.ForeignKey(TransportBody, models.CASCADE)
     shipping_type = models.ForeignKey(TransportShippingType, models.CASCADE)
@@ -113,4 +112,4 @@ class Route(TimeStampedMixin):
     shipping_date = models.DateField()
     shipping_time = models.TimeField()
 
-
+    comment = models.CharField(max_length=1000, blank=True)
