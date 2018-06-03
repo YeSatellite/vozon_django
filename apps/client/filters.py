@@ -2,6 +2,7 @@
 from rest_framework import filters
 
 from apps.client.models import Route
+from apps.core.utils import norm
 
 
 class RouteFilterBackend(filters.BaseFilterBackend):
@@ -12,6 +13,7 @@ class RouteFilterBackend(filters.BaseFilterBackend):
         :type queryset: Route.objects
         """
         par = request.query_params
+        norm(par)
         type_ = par.get('type', None)
         if type_ == -1:
             queryset = queryset.filter(transport__isnull=True)
