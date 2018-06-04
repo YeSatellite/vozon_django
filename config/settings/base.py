@@ -186,6 +186,13 @@ LOGGING = {
             'maxBytes': 1024 * 1024 * 15,  # 15MB
             'backupCount': 10,
         },
+        'error': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(BASE_DIR / 'logs/error'),
+            'maxBytes': 1024 * 1024 * 2,  # 2MB
+            'backupCount': 10,
+        },
         'need': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
@@ -199,6 +206,11 @@ LOGGING = {
         'django': {
             'handlers': ['file', 'console'],
             'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.error': {
+            'handlers': ['error', 'console'],
+            'level': 'ERROR',
             'propagate': True,
         },
         'project.need': {
