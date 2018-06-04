@@ -224,5 +224,3 @@ SMSC_DEBUG = True
 CRON_CLASSES = [
     "apps.client.jobs.ClearOrderJob",
 ]
-
-FILE_CHARSET = 'utf-8'
