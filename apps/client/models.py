@@ -16,7 +16,6 @@ class Transport(TimeStampedMixin,
     owner = models.ForeignKey(User, models.CASCADE, related_name='transport')
 
     model = models.ForeignKey(TransportModel, models.CASCADE)
-    body = models.ForeignKey(TransportBody, models.CASCADE)
     shipping_type = models.ForeignKey(TransportShippingType, models.CASCADE)
 
     image1 = models.ImageField(upload_to='transport/', null=True)

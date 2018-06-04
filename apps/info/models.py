@@ -35,6 +35,7 @@ class City(TimeStampedMixin,
 class TransportType(TimeStampedMixin,
                     SoftDeletionMixin):
     name = models.CharField(max_length=100, unique=True)
+    icon = models.ImageField(null=True)  # TODO: null = False
 
     def __str__(self):
         return str("%s" % self.name)
@@ -93,7 +94,7 @@ class OtherService(TimeStampedMixin,
 class Category(TimeStampedMixin,
                SoftDeletionMixin):
     name = models.CharField(max_length=100, unique=True)
-    icon = models.ImageField(null=True)
+    icon = models.ImageField()
 
     def __str__(self):
         return str("%s" % self.name)

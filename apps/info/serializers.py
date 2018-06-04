@@ -35,7 +35,7 @@ class CountryPhoneSerializer(serializers.ModelSerializer):
 class TransportTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransportType
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'icon')
 
 
 class TransportMarkSerializer(serializers.ModelSerializer):
