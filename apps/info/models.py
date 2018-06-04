@@ -7,8 +7,8 @@ from apps.core.models import TimeStampedMixin, SoftDeletionMixin
 class Country(TimeStampedMixin,
               SoftDeletionMixin):
     name = models.CharField(max_length=100, unique=True)
-    phone_code = models.CharField(max_length=10, unique=True)
-    phone_mask = models.CharField(max_length=100, unique=True)
+    phone_code = models.CharField(max_length=10)
+    phone_mask = models.CharField(max_length=100)
 
     def __str__(self):
         return str(self.name)
