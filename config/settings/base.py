@@ -154,7 +154,7 @@ PUSH_NOTIFICATIONS_SETTINGS = {
                    "5UpT770xRIT3x6Hgt2P2d49Ooh8dCiW_5YCCqgX"
                    "BnBc_PsX2ZDALcCsH_tIY8n_qtqabYQQkoQ",
     "APNS_CERTIFICATE": str(BASE_DIR / 'config/certificate.pem'),
-    "APNS_TOPIC": "kz.YelnurNotification",
+    "APNS_TOPIC": "kz.vozon",
 }
 
 LOGGING = {
