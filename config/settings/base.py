@@ -218,7 +218,7 @@ LOGGING = {
 
 SMSC_LOGIN = 'Vozon'
 SMSC_PASSWORD = 'Darhan987'
-SMSC_DEBUG = True
+SMSC_DEBUG = False
 
 
 CRON_CLASSES = [
