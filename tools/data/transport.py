@@ -1,7 +1,7 @@
 # coding=utf-8
 import json
 
-with open('transport.json') as f:
+with open('transport_old.json') as f:
     data = json.load(f)
 
 t_types = []
@@ -12,12 +12,18 @@ for i in range(len(data)):
     t_types.append({'id': i, 'name': data[i]['title']})
     brands = data[i]['brands']
     for brand in brands:
-        mark_name = brand['marks'][0]['title'].split()[0]
+        mark_name, model_name = brand['marks'][0]['title'].split(maxsplit=1)
+        if 'шасси' in model_name:
+            continue
+        if 'на базе' in model_name:
+            continue
         marks[mark_name] = marks.get(mark_name, [])
         for mark in brand['marks']:
-            name = mark['title'].split(maxsplit=1)[-1]
-            if not len(name):
-                print(mark['title'])
+            name = mark['title'].split(maxsplit=1)[1]
+            if 'шасси' in name:
+                continue
+            if 'на базе' in name:
+                continue
             marks[mark_name].append({"name": name, "type": i})
 
 marksL = []
@@ -28,5 +34,5 @@ data = {"type": t_types, "marks": marksL}
 
 j = json.dumps(data, ensure_ascii=True).encode('utf8')
 
-with open('data.json', 'w') as f:
+with open('transport.json', 'w') as f:
     json.dump(data, f, ensure_ascii=False)

@@ -53,7 +53,7 @@ class TransportModel(TimeStampedMixin,
                      SoftDeletionMixin):
     type = models.ForeignKey(TransportType, models.CASCADE)
     mark = models.ForeignKey(TransportMark, models.CASCADE)
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return str(self.name)
