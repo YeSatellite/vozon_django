@@ -30,9 +30,6 @@ class UserManager(BaseUserManager, SoftDeletionManager):
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('city', City.objects.all()[0])
-        extra_fields.setdefault('citizenship', Country.objects.all()[0])
-        extra_fields.setdefault('citizenship', Country.objects.all()[0])
-        extra_fields.setdefault('dob', '1996-3-14')
         extra_fields.setdefault('type', TYPE[0][0])
 
         if extra_fields.get('is_superuser') is not True:

@@ -17,7 +17,7 @@ class Country(TimeStampedMixin,
 class Region(TimeStampedMixin,
              SoftDeletionMixin):
     country = models.ForeignKey(Country, models.CASCADE)
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return str(self.name)
@@ -26,7 +26,7 @@ class Region(TimeStampedMixin,
 class City(TimeStampedMixin,
            SoftDeletionMixin):
     region = models.ForeignKey(Region, models.CASCADE)
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return str("%s, %s" % (self.name, self.region.name))
