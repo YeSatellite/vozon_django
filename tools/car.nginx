@@ -13,6 +13,7 @@ server {
 
     location /media/  {
         root /home/car/car;
+        client_max_body_size 75M;
     }
 
     location / {
