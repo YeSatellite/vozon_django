@@ -46,12 +46,18 @@ class User(AbstractBaseUser,
 
     def send_sms_confirmation(self):
         sms_code = str(randint(0, 9999)).zfill(4)
+        phone = self.phone
 
         debug = getattr(settings, 'SMSC_DEBUG', False)
         if debug:
             sms_code = '1111'
 
-        phone = self.phone
+        if settings.DEBUG:
+            if len(phone) > 8 and phone[5:9] == "0000":
+                self.sms_code = sms_code
+                self.save()
+                return None
+
         sms_sender(phone, sms_code)
         self.sms_code = sms_code
         self.save()
