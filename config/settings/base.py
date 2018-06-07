@@ -11,6 +11,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 ROOT_URLCONF = 'config.urls'
 AUTH_USER_MODEL = 'user.User'
 
+FILE_UPLOAD_MAX_MEMORY_SIZE = 75*1024*1024
+
 # ====================APPS==================== #
 
 DJANGO_APPS = [
