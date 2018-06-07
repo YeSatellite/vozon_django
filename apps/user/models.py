@@ -54,7 +54,7 @@ class User(AbstractBaseUser,
 
         if settings.DEBUG:
             if len(phone) > 8 and phone[5:9] == "0000":
-                self.sms_code = sms_code
+                self.sms_code = '0000'
                 self.save()
                 return None
 
