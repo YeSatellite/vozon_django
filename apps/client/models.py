@@ -55,6 +55,8 @@ class Order(TimeStampedMixin):
     shipping_date = models.DateField()
     shipping_time = models.TimeField()
 
+    price = models.PositiveIntegerField()
+
     offer = models.ForeignKey('Offer', models.CASCADE, null=True, related_name='order_active_offer')
 
     def to_active(self, offer):

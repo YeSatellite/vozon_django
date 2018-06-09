@@ -15,12 +15,11 @@ class RouteFilterBackend(filters.BaseFilterBackend):
         par = request.query_params
         norm(par)
         type_ = par.get('type', None)
-        if type_ == ['-1']:
-            norm("$1")
-            queryset = queryset.filter(transport__isnull=True)
-        elif f(type_):
+        if f(type_):
             norm("$2")
-            queryset = queryset.filter(transport__model__type=type_)
+            type_ = type_.split(',')
+            print(type_[0])
+            queryset = queryset.filter(transport__model__type__in=type_)
         if f(par.get('start_point', None)):
             norm("$3")
             queryset = queryset.filter(start_point_id=par['start_point'])

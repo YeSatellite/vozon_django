@@ -20,7 +20,7 @@ class User(AbstractBaseUser,
     phone = models.CharField(max_length=30, unique=True)
     name = models.CharField(max_length=100)
     city = models.ForeignKey(City, models.CASCADE)
-    about = models.CharField(max_length=1000)
+    about = models.CharField(max_length=1000, blank=True)
     avatar = models.ImageField(upload_to='avatars/', null=True)
     is_staff = models.BooleanField(default=False)  # for admin page
     sms_code = models.CharField(max_length=10, null=True)

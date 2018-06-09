@@ -73,7 +73,7 @@ ORDER_FIELDS = ('id', 'owner',
                 'payment_type', 'payment_type_name',
                 'category', 'category_name',
                 'accept_person', 'accept_person_contact',
-                'shipping_date', 'shipping_time',
+                'shipping_date', 'shipping_time', 'price',
                 'offer',
                 'start_point_id', 'end_point_id',)
 
@@ -93,7 +93,6 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ORDER_FIELDS
-        read_only_fields = ('price',)
 
     def create(self, validated_data):
         validated_data['owner'] = self.context['request'].user
