@@ -1,9 +1,10 @@
 # coding=utf-8
+from django.conf.urls import url
 from rest_framework.routers import DefaultRouter
 
 from apps.info.views import CityViewSet, CountryViewSet, TransportMarkViewSet, \
     TransportModelViewSet, TransportBodyViewSet, TransportShippingTypeViewSet, RegionViewSet, PaymentTypeViewSet, \
-    OtherServiceViewSet, CategoryViewSet, CountryPhoneViewSet, TransportTypeViewSet
+    OtherServiceViewSet, CategoryViewSet, CountryPhoneViewSet, TransportTypeViewSet, TermsView
 
 router = DefaultRouter()
 router.register(r'city', CityViewSet, base_name='city')
@@ -19,5 +20,7 @@ router.register(r'payment-type', PaymentTypeViewSet, base_name='payment type')
 router.register(r'other-type', OtherServiceViewSet, base_name='other type')
 router.register(r'category', CategoryViewSet, base_name='category')
 
+
 urlpatterns = router.urls
+urlpatterns += [url(r'terms', TermsView.as_view())]
 

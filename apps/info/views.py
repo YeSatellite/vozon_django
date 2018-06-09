@@ -1,4 +1,5 @@
 # coding=utf-8
+from django.views.generic import TemplateView
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
@@ -82,3 +83,7 @@ class CategoryViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
+
+
+class TermsView(TemplateView):
+    template_name = 'termsofuse.html'

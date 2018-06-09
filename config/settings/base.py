@@ -107,8 +107,8 @@ USE_TZ = True
 
 # ====================PATH & URL==================== #
 # Static
-STATIC_ROOT = str(BASE_DIR / 'static')
-STATIC_URL = '/static/'
+STATIC_ROOT = str(BASE_DIR / 'templates')
+STATIC_URL = '/templates/'
 # Media
 MEDIA_ROOT = str(BASE_DIR / 'media')
 MEDIA_URL = '/media/'
