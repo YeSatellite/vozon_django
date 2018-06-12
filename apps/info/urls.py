@@ -16,6 +16,7 @@ router.register(r'transport/mark', TransportMarkViewSet, base_name='transport ma
 router.register(r'transport/model', TransportModelViewSet, base_name='transport model')
 router.register(r'transport/body', TransportBodyViewSet, base_name='transport body')
 router.register(r'transport/shipping-type', TransportShippingTypeViewSet, base_name='transport shipping type')
+router.register(r'transport/load-type', TransportShippingTypeViewSet, base_name='transport load type')
 router.register(r'payment-type', PaymentTypeViewSet, base_name='payment type')
 router.register(r'other-type', OtherServiceViewSet, base_name='other type')
 router.register(r'category', CategoryViewSet, base_name='category')

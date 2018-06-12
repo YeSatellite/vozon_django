@@ -2,7 +2,7 @@
 from rest_framework import serializers
 
 from apps.info.models import City, TransportType, Country, TransportMark, TransportModel, TransportBody, \
-    TransportShippingType, Region, PaymentType, OtherService, Category
+    TransportShippingType, Region, PaymentType, OtherService, Category, TransportLoadType
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -59,6 +59,12 @@ class TransportBodySerializer(serializers.ModelSerializer):
 class TransportShippingTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransportShippingType
+        fields = ('id', 'name')
+
+
+class TransportLoadTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TransportLoadType
         fields = ('id', 'name')
 
 

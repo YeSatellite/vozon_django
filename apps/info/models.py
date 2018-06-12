@@ -75,6 +75,14 @@ class TransportShippingType(TimeStampedMixin,
         return str("%s" % self.name)
 
 
+class TransportLoadType(TimeStampedMixin,
+                        SoftDeletionMixin):
+    name = models.CharField(max_length=100, unique=True, null=True)  # TODO
+
+    def __str__(self):
+        return str("%s" % self.name)
+
+
 class PaymentType(TimeStampedMixin,
                   SoftDeletionMixin):
     name = models.CharField(max_length=100, unique=True)

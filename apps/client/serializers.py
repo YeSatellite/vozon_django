@@ -8,8 +8,10 @@ from apps.info.serializers import CitySerializer
 from apps.user.serializers import UserSerializer
 
 TRANSPORT_FIELDS = ('id', 'owner',
-                    'model', 'shipping_type',
-                    'type_name', 'type_icon', 'mark_name', 'model_name', 'shipping_type_name',
+                    'model', 'mark_name', 'model_name',
+                    'shipping_type', 'shipping_type_name',
+                    'load_type', 'load_type_name',
+                    'type_name', 'type_icon',
                     'image1', 'image2', 'number', 'width', 'height', 'length', 'comment')
 
 
@@ -21,6 +23,7 @@ class TransportSerializer(serializers.ModelSerializer):
     mark_name = serializers.ReadOnlyField(source='model.mark.name')
     model_name = serializers.ReadOnlyField(source='model.name')
     shipping_type_name = serializers.ReadOnlyField(source='shipping_type.name')
+    load_type_name = serializers.ReadOnlyField(source='shipping_type.name')
 
     def create(self, validated_data):
         validated_data['owner'] = self.context['request'].user

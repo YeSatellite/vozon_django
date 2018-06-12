@@ -7,7 +7,7 @@ from rest_framework.exceptions import ValidationError
 
 from apps.core.models import TimeStampedMixin, SoftDeletionMixin
 from apps.info.models import City, TransportType, TransportModel, TransportBody, TransportShippingType, PaymentType, \
-    OtherService, Category
+    OtherService, Category, TransportLoadType
 from apps.user.models import User
 
 PRICE_TYPE = (
@@ -24,6 +24,7 @@ class Transport(TimeStampedMixin,
 
     model = models.ForeignKey(TransportModel, models.CASCADE)
     shipping_type = models.ForeignKey(TransportShippingType, models.CASCADE)
+    load_type = models.ForeignKey(TransportLoadType, models.CASCADE)
 
     image1 = models.ImageField(upload_to='transport/', null=True)
     image2 = models.ImageField(upload_to='transport/', null=True)

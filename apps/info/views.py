@@ -4,10 +4,11 @@ from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from apps.info.models import City, Country, TransportType, TransportMark, TransportModel, TransportBody, \
-    TransportShippingType, Region, PaymentType, OtherService, Category
+    TransportShippingType, Region, PaymentType, OtherService, Category, TransportLoadType
 from apps.info.serializers import CitySerializer, CountrySerializer, TransportMarkSerializer, \
     TransportModelSerializer, TransportBodySerializer, TransportShippingTypeSerializer, RegionSerializer, \
-    PaymentTypeSerializer, OtherServiceSerializer, CategorySerializer, CountryPhoneSerializer, TransportTypeSerializer
+    PaymentTypeSerializer, OtherServiceSerializer, CategorySerializer, CountryPhoneSerializer, TransportTypeSerializer, \
+    TransportLoadTypeSerializer
 
 
 class CityViewSet(ReadOnlyModelViewSet):
@@ -65,6 +66,12 @@ class TransportShippingTypeViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = TransportShippingTypeSerializer
     queryset = TransportShippingType.objects.all()
+
+
+class TransportLoadTypeViewSet(ReadOnlyModelViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = TransportLoadTypeSerializer
+    queryset = TransportLoadType.objects.all()
 
 
 class PaymentTypeViewSet(ReadOnlyModelViewSet):
