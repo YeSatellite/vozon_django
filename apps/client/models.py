@@ -24,7 +24,7 @@ class Transport(TimeStampedMixin,
 
     model = models.ForeignKey(TransportModel, models.CASCADE)
     shipping_type = models.ForeignKey(TransportShippingType, models.CASCADE)
-    load_type = models.ForeignKey(TransportLoadType, models.CASCADE)
+    load_type = models.ForeignKey(TransportLoadType, models.CASCADE, null=True)
 
     image1 = models.ImageField(upload_to='transport/', null=True)
     image2 = models.ImageField(upload_to='transport/', null=True)

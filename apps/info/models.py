@@ -77,7 +77,7 @@ class TransportShippingType(TimeStampedMixin,
 
 class TransportLoadType(TimeStampedMixin,
                         SoftDeletionMixin):
-    name = models.CharField(max_length=100, unique=True, null=True)  # TODO
+    name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return str("%s" % self.name)
