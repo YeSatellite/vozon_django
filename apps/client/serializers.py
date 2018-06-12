@@ -33,7 +33,7 @@ class TransportSerializer(serializers.ModelSerializer):
 
 # -------------------------------------------
 
-TRANSPORT_OFFER_FIELDS = ('id', 'transport', 'order', 'price',
+TRANSPORT_OFFER_FIELDS = ('id', 'transport', 'order', 'price', 'currency',
                           'payment_type', 'other_service', 'shipping_type',
                           'payment_type_name', 'other_service_name', 'shipping_type_name',
                           'comment', 'created',
@@ -73,7 +73,7 @@ ORDER_FIELDS = ('id', 'owner',
                 'payment_type', 'payment_type_name',
                 'category', 'category_name',
                 'accept_person', 'accept_person_contact',
-                'shipping_date', 'shipping_time', 'price',
+                'shipping_date', 'shipping_time', 'price', 'currency',
                 'offer',
                 'start_point_id', 'end_point_id',)
 

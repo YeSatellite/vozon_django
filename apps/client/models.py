@@ -10,6 +10,13 @@ from apps.info.models import City, TransportType, TransportModel, TransportBody,
     OtherService, Category
 from apps.user.models import User
 
+PRICE_TYPE = (
+    ('₸', '₸'),
+    ('₽', '₽'),
+    ('$', '$'),
+    ('⊆', '⊆'),
+)
+
 
 class Transport(TimeStampedMixin,
                 SoftDeletionMixin):
@@ -56,6 +63,7 @@ class Order(TimeStampedMixin):
     shipping_time = models.TimeField()
 
     price = models.PositiveIntegerField()
+    currency = models.CharField(max_length=10, choices=PRICE_TYPE)
 
     offer = models.ForeignKey('Offer', models.CASCADE, null=True, related_name='order_active_offer')
 
@@ -92,6 +100,7 @@ class Offer(TimeStampedMixin):
     order = models.ForeignKey(Order, models.CASCADE, validators=[status_test], related_name='offer_order')
 
     price = models.PositiveIntegerField()
+    currency = models.CharField(max_length=10, choices=PRICE_TYPE)
 
     payment_type = models.ForeignKey(PaymentType, models.CASCADE)
     other_service = models.ForeignKey(OtherService, models.CASCADE)
