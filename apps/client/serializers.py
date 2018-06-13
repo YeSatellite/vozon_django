@@ -23,7 +23,7 @@ class TransportSerializer(serializers.ModelSerializer):
     mark_name = serializers.ReadOnlyField(source='model.mark.name')
     model_name = serializers.ReadOnlyField(source='model.name')
     shipping_type_name = serializers.ReadOnlyField(source='shipping_type.name')
-    load_type_name = serializers.ReadOnlyField(source='shipping_type.name')
+    load_type_name = serializers.ReadOnlyField(source='load_type.name')
 
     def create(self, validated_data):
         validated_data['owner'] = self.context['request'].user
