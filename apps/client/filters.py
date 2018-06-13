@@ -53,6 +53,7 @@ class OrderFilterBackend(filters.BaseFilterBackend):
             start_point = par.get('start_point', None)
             if f(start_point):
                 start_point = start_point.split(',')
+                print(start_point)
                 queryset = queryset.filter(start_point_id__in=start_point)
             queryset = queryset.filter(offer=None)
             queryset = queryset.exclude(pk__in=offers_orders)

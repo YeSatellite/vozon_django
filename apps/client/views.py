@@ -114,7 +114,7 @@ class CourierOrderViewSet(ModelViewSet):
     serializer_class = OrderSerializer
     queryset = Order.objects.all().order_by("-created")
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsCourier]
-    filter_backends = (filters.RouteFilterBackend,)
+    filter_backends = (filters.OrderFilterBackend,)
 
 
 class CourierOfferViewSet(ModelViewSet):
