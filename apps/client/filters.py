@@ -1,7 +1,7 @@
 # coding=utf-8
 from rest_framework import filters
 
-from apps.client.models import Route
+from apps.client.models import Route, Order, Offer
 from apps.core.utils import norm
 
 
@@ -32,6 +32,36 @@ class RouteFilterBackend(filters.BaseFilterBackend):
         if f(par.get('end_date', None)):
             norm("$6")
             queryset = queryset.filter(shipping_date__lte=par['end_date'])
+
+        return queryset
+
+
+class OrderFilterBackend(filters.BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        """
+        :param view:
+        :type request:
+        :type queryset: Order.objects
+        """
+        par = request.query_params
+        offers_orders = Offer.objects.all() \
+            .filter(transport__owner=request.user) \
+            .values_list('order', flat=True)
+
+        status = par.get('status', 'posted')
+        if status == 'posted':
+            start_point = par.get('start_point', None)
+            if f(start_point):
+                start_point = start_point.split(',')
+                queryset = queryset.filter(start_point_id__in=start_point)
+            queryset = queryset.filter(offer=None)
+            queryset = queryset.exclude(pk__in=offers_orders)
+        elif status == 'active':
+            offers = Offer.objects.filter(transport__owner=request.user)
+            queryset = queryset.filter(offer__in=offers)
+        else:
+            queryset = queryset.filter(pk__in=offers_orders)
+            queryset = queryset.filter(offer__isnull=True)
 
         return queryset
 

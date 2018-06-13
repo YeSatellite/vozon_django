@@ -114,24 +114,7 @@ class CourierOrderViewSet(ModelViewSet):
     serializer_class = OrderSerializer
     queryset = Order.objects.all().order_by("-created")
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsCourier]
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        status_ = self.request.query_params.get('status', 'posted')
-        offers_orders = Offer.objects.all() \
-            .filter(transport__owner=self.request.user) \
-            .values_list('order', flat=True)
-        if status_ == 'posted':
-            queryset = queryset.filter(start_point=self.request.user.city)
-            queryset = queryset.filter(offer=None)
-            queryset = queryset.exclude(pk__in=offers_orders)
-        elif status_ == 'active':
-            offers = Offer.objects.filter(transport__owner=self.request.user)
-            queryset = queryset.filter(offer__in=offers)
-        else:
-            queryset = queryset.filter(pk__in=offers_orders)
-            queryset = queryset.filter(offer__isnull=True)
-        return queryset
+    filter_backends = (filters.RouteFilterBackend,)
 
 
 class CourierOfferViewSet(ModelViewSet):
