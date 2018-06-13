@@ -32,7 +32,7 @@ class Transport(TimeStampedMixin,
     width = models.FloatField()
     height = models.FloatField()
     length = models.FloatField()
-    comment = models.CharField(max_length=100)
+    comment = models.CharField(max_length=100, blank=True)
 
 
 class Order(TimeStampedMixin):
