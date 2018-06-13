@@ -18,8 +18,7 @@ PRICE_TYPE = (
 )
 
 
-class Transport(TimeStampedMixin,
-                SoftDeletionMixin):
+class Transport(TimeStampedMixin):
     owner = models.ForeignKey(User, models.CASCADE, related_name='transport')
 
     model = models.ForeignKey(TransportModel, models.CASCADE)
