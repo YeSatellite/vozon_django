@@ -24,7 +24,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        countries = ['kazakstan.json', 'russian.json', ]
+        countries = ['kazakstan.json', 'russian.json', 'kyrgyzstan.json', 'armeniya.json']
 
         for file in countries:
             with open('tools/data/%s' % file) as f:
