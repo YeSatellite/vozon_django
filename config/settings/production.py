@@ -7,4 +7,4 @@ SECRET_KEY = 'p_gnmp4v*+qks+bj)1d=(7v9-exb_e5vz41#l@-*etw4rtbzf('
 
 ALLOWED_HOSTS += ['yesatellite.pythonanywhere.com', '188.166.50.157']
 
-DEBUG = True  # WARNING
+DEBUG = False  # WARNING
