@@ -158,6 +158,8 @@ PUSH_NOTIFICATIONS_SETTINGS = {
     "APNS_CERTIFICATE": str(BASE_DIR / 'config/certificate.pem'),
     "APNS_TOPIC": "kz.vozon",
 }
+APNS_USE_SANDBOX = False
+
 
 LOGGING = {
     'version': 1,
