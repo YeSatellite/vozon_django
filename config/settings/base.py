@@ -157,6 +157,7 @@ PUSH_NOTIFICATIONS_SETTINGS = {
                    "BnBc_PsX2ZDALcCsH_tIY8n_qtqabYQQkoQ",
     "APNS_CERTIFICATE": str(BASE_DIR / 'config/certificate.pem'),
     "APNS_TOPIC": "kz.vozon",
+    "APNS_USE_SANDBOX": False
 }
 
 
