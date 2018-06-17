@@ -35,8 +35,8 @@ class TransportSerializer(serializers.ModelSerializer):
 # -------------------------------------------
 
 TRANSPORT_OFFER_FIELDS = ('id', 'transport', 'order', 'price', 'currency',
-                          'payment_type', 'other_service', 'shipping_type',
-                          'payment_type_name', 'other_service_name', 'shipping_type_name',
+                          'payment_type', 'other_service',
+                          'payment_type_name', 'other_service_name',
                           'comment', 'created',
                           'transport_id',)
 
@@ -48,7 +48,6 @@ class OfferSerializer(serializers.ModelSerializer):
 
     payment_type_name = serializers.ReadOnlyField(source='payment_type.name')
     other_service_name = serializers.ReadOnlyField(source='other_service.name')
-    shipping_type_name = serializers.ReadOnlyField(source='shipping_type.name')
 
     class Meta:
         model = Offer

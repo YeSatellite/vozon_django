@@ -105,7 +105,6 @@ class Offer(TimeStampedMixin):
 
     payment_type = models.ForeignKey(PaymentType, models.CASCADE)
     other_service = models.ForeignKey(OtherService, models.CASCADE)
-    shipping_type = models.ForeignKey(TransportShippingType, models.CASCADE)
 
     comment = models.CharField(max_length=1000)
 
