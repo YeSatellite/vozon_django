@@ -116,7 +116,7 @@ class Route(TimeStampedMixin):
     transport = models.ForeignKey(Transport, models.CASCADE, related_name='route_transport')
 
     start_point = models.ForeignKey(City, models.CASCADE, related_name='route_start_point')
-    end_point = models.ForeignKey(City, models.CASCADE, related_name='route_end_point')
+    end_point = models.ForeignKey(City, models.CASCADE, related_name='route_end_point', null=True)
 
     shipping_date = models.DateField()
     shipping_time = models.TimeField()
