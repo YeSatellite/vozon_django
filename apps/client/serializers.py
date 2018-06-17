@@ -10,13 +10,14 @@ from apps.user.serializers import UserSerializer
 TRANSPORT_FIELDS = ('id', 'owner',
                     'model', 'mark_name', 'model_name',
                     'load_type', 'load_type_name',
-                    'type', 'type_info',
+                    'type', 'type_id',
                     'image1', 'image2', 'number', 'width', 'height', 'length', 'comment')
 
 
 class TransportSerializer(serializers.ModelSerializer):
     owner = UserSerializer(read_only=True)
-    type_info = TransportTypeSerializer(read_only=True, source='type')
+    type = TransportTypeSerializer(read_only=True)
+    type_id = serializers.IntegerField(write_only=True)
     mark_name = serializers.ReadOnlyField(source='model.mark.name')
     model_name = serializers.ReadOnlyField(source='model.name')
     load_type_name = serializers.ReadOnlyField(source='load_type.name')
