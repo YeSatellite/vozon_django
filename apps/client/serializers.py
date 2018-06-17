@@ -9,7 +9,7 @@ from apps.user.serializers import UserSerializer
 
 TRANSPORT_FIELDS = ('id', 'owner',
                     'model', 'mark_name', 'model_name',
-                    'shipping_type', 'shipping_type_name',
+                    'have_loaders',
                     'load_type', 'load_type_name',
                     'type', 'type_info',
                     'image1', 'image2', 'number', 'width', 'height', 'length', 'comment')
@@ -20,7 +20,6 @@ class TransportSerializer(serializers.ModelSerializer):
     type_info = TransportTypeSerializer(read_only=True, source='type')
     mark_name = serializers.ReadOnlyField(source='model.mark.name')
     model_name = serializers.ReadOnlyField(source='model.name')
-    shipping_type_name = serializers.ReadOnlyField(source='shipping_type.name')
     load_type_name = serializers.ReadOnlyField(source='load_type.name')
 
     def create(self, validated_data):

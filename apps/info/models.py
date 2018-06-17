@@ -66,14 +66,6 @@ class TransportBody(TimeStampedMixin,
         return str("%s" % self.name)
 
 
-class TransportShippingType(TimeStampedMixin,
-                            SoftDeletionMixin):
-    name = models.CharField(max_length=100, unique=True)
-
-    def __str__(self):
-        return str("%s" % self.name)
-
-
 class TransportLoadType(TimeStampedMixin,
                         SoftDeletionMixin):
     name = models.CharField(max_length=100, unique=True)

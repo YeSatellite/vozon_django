@@ -1,12 +1,10 @@
 # coding=utf-8
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from push_notifications.models import APNSDevice
 from rest_framework.exceptions import ValidationError
 
 from apps.core.models import TimeStampedMixin, SoftDeletionMixin
-from apps.info.models import City, TransportType, TransportModel, TransportBody, TransportShippingType, PaymentType, \
+from apps.info.models import City, TransportType, TransportModel, TransportBody, PaymentType, \
     OtherService, Category, TransportLoadType
 from apps.user.models import User
 
@@ -22,7 +20,7 @@ class Transport(TimeStampedMixin):
     owner = models.ForeignKey(User, models.CASCADE, related_name='transport')
 
     model = models.ForeignKey(TransportModel, models.CASCADE)
-    shipping_type = models.ForeignKey(TransportShippingType, models.CASCADE)
+    have_loaders = models.BooleanField()
     type = models.ForeignKey(TransportType, models.CASCADE)
     load_type = models.ForeignKey(TransportLoadType, models.CASCADE)
 
