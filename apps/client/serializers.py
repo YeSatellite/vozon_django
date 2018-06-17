@@ -18,8 +18,8 @@ TRANSPORT_FIELDS = ('id', 'owner',
 class TransportSerializer(serializers.ModelSerializer):
     owner = UserSerializer(read_only=True)
 
-    type_name = serializers.ReadOnlyField(source='model.type.name')
-    type_icon = serializers.ImageField(source='model.type.icon', read_only=True)
+    type_name = serializers.ReadOnlyField(source='type.name')
+    type_icon = serializers.ImageField(source='type.icon', read_only=True)
     mark_name = serializers.ReadOnlyField(source='model.mark.name')
     model_name = serializers.ReadOnlyField(source='model.name')
     shipping_type_name = serializers.ReadOnlyField(source='shipping_type.name')
