@@ -22,7 +22,7 @@ class RouteFilterBackend(filters.BaseFilterBackend):
         if f(par.get('start_point', None)):
             queryset = queryset.filter(start_point_id=par['start_point'])
         if f(par.get('end_point', None)):
-            queryset = queryset.filter(Q(end_point_id=par['start_point']) | Q(end_point__isnull=True))
+            queryset = queryset.filter(Q(end_point_id=par['end_point']) | Q(end_point__isnull=True))
         if f(par.get('start_date', None)):
             queryset = queryset.filter(shipping_date__gte=par['start_date'])
         if f(par.get('end_date', None)):

@@ -135,8 +135,5 @@ class RouteSerializer(serializers.ModelSerializer):
         else:
             transport = None
         attrs['transport'] = transport
-        attrs['start_point'] = City.objects.get(pk=attrs['start_point_id'])
-        if attrs['end_point_id']:
-            attrs['end_point'] = City.objects.get(pk=attrs['end_point_id'])
 
         return attrs
