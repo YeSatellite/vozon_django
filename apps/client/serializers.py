@@ -4,7 +4,7 @@ from rest_framework import serializers
 
 from apps.client.models import Transport, Order, Offer, Route
 from apps.info.models import City
-from apps.info.serializers import CitySerializer
+from apps.info.serializers import CitySerializer, TransportTypeSerializer
 from apps.user.serializers import UserSerializer
 
 TRANSPORT_FIELDS = ('id', 'owner',
@@ -17,7 +17,7 @@ TRANSPORT_FIELDS = ('id', 'owner',
 
 class TransportSerializer(serializers.ModelSerializer):
     owner = UserSerializer(read_only=True)
-    type_info = CitySerializer(read_only=True, source='type')
+    type_info = TransportTypeSerializer(read_only=True, source='type')
     mark_name = serializers.ReadOnlyField(source='model.mark.name')
     model_name = serializers.ReadOnlyField(source='model.name')
     shipping_type_name = serializers.ReadOnlyField(source='shipping_type.name')
