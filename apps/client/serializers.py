@@ -115,7 +115,7 @@ class RouteSerializer(serializers.ModelSerializer):
     start_point = CitySerializer(read_only=True)
     end_point = CitySerializer(read_only=True)
     start_point_id = serializers.IntegerField(write_only=True)
-    end_point_id = serializers.IntegerField(write_only=True)
+    end_point_id = serializers.IntegerField(write_only=True, allow_null=True)
 
     class Meta:
         model = Route
@@ -136,6 +136,7 @@ class RouteSerializer(serializers.ModelSerializer):
             transport = None
         attrs['transport'] = transport
         attrs['start_point'] = City.objects.get(pk=attrs['start_point_id'])
-        attrs['end_point'] = City.objects.get(pk=attrs['end_point_id'])
+        if attrs['end_point_id']:
+            attrs['end_point'] = City.objects.get(pk=attrs['end_point_id'])
 
         return attrs
