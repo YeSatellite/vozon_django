@@ -20,7 +20,6 @@ class Transport(TimeStampedMixin):
     owner = models.ForeignKey(User, models.CASCADE, related_name='transport')
 
     model = models.ForeignKey(TransportModel, models.CASCADE)
-    have_loaders = models.BooleanField()
     type = models.ForeignKey(TransportType, models.CASCADE)
     load_type = models.ForeignKey(TransportLoadType, models.CASCADE)
 
@@ -103,6 +102,8 @@ class Offer(TimeStampedMixin):
 
     payment_type = models.ForeignKey(PaymentType, models.CASCADE)
     other_service = models.ForeignKey(OtherService, models.CASCADE)
+
+    have_loaders = models.BooleanField()
 
     comment = models.CharField(max_length=1000)
 
