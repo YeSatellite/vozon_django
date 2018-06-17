@@ -1,4 +1,5 @@
 # coding=utf-8
+from django.db.models import Q
 from rest_framework import filters
 
 from apps.client.models import Route, Order, Offer
@@ -16,21 +17,15 @@ class RouteFilterBackend(filters.BaseFilterBackend):
         norm(par)
         type_ = par.get('type', None)
         if f(type_):
-            norm("$2")
             type_ = type_.split(',')
-            print(type_[0])
-            queryset = queryset.filter(transport__model__type__in=type_)
+            queryset = queryset.filter(transport__type__in=type_)
         if f(par.get('start_point', None)):
-            norm("$3")
             queryset = queryset.filter(start_point_id=par['start_point'])
         if f(par.get('end_point', None)):
-            norm("$4")
-            queryset = queryset.filter(end_point_id=par['end_point'])
+            queryset = queryset.filter(Q(end_point_id=par['start_point']) | Q(end_point__isnull=True))
         if f(par.get('start_date', None)):
-            norm("$5")
             queryset = queryset.filter(shipping_date__gte=par['start_date'])
         if f(par.get('end_date', None)):
-            norm("$6")
             queryset = queryset.filter(shipping_date__lte=par['end_date'])
 
         return queryset
