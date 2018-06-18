@@ -14,52 +14,52 @@ from apps.info.serializers import CitySerializer, CountrySerializer, TransportMa
 class CityViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = CitySerializer
-    queryset = City.objects.all()
+    queryset = City.objects.all().order_by('name')
     filter_fields = ('region',)
 
 
 class RegionViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = RegionSerializer
-    queryset = Region.objects.all()
+    queryset = Region.objects.all().order_by('name')
     filter_fields = ('country',)
 
 
 class CountryViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = CountrySerializer
-    queryset = Country.objects.all()
+    queryset = Country.objects.all().order_by('name')
 
 
 class CountryPhoneViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = CountryPhoneSerializer
-    queryset = Country.objects.all()
+    queryset = Country.objects.all().order_by('name')
 
 
 class TransportTypeViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = TransportTypeSerializer
-    queryset = TransportType.objects.all()
+    queryset = TransportType.objects.all().order_by('name')
 
 
 class TransportMarkViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = TransportMarkSerializer
-    queryset = TransportMark.objects.all()
+    queryset = TransportMark.objects.all().order_by('name')
 
 
 class TransportModelViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = TransportModelSerializer
-    queryset = TransportModel.objects.all()
+    queryset = TransportModel.objects.all().order_by('name')
     filter_fields = ('mark',)
 
 
 class TransportBodyViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = TransportBodySerializer
-    queryset = TransportBody.objects.all()
+    queryset = TransportBody.objects.all().order_by('name')
 
 
 class TransportLoadTypeViewSet(ReadOnlyModelViewSet):
