@@ -10,7 +10,7 @@ TYPE = (
 )
 
 
-class UserManager(BaseUserManager, SoftDeletionManager):
+class UserManager(BaseUserManager):
     use_in_migrations = True
 
     def _create_user(self, phone, name, password, **extra_fields):
