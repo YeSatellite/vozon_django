@@ -86,3 +86,9 @@ def sent_sms(request):
 
     user.send_sms_confirmation()
     return Response({'status': 'sms successfully sent'})
+
+
+@api_view(["DELETE"])
+def remove_user(request):
+    request.user.delete()
+    return Response({'status': 'user deleted'})
