@@ -15,8 +15,7 @@ from apps.info.models import City, Country
 
 class User(AbstractBaseUser,
            PermissionsMixin,
-           TimeStampedMixin,
-           SoftDeletionMixin):
+           TimeStampedMixin):
     phone = models.CharField(max_length=30, unique=True)
     name = models.CharField(max_length=100)
     city = models.ForeignKey(City, models.CASCADE)
