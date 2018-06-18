@@ -28,19 +28,19 @@ class RegionViewSet(ReadOnlyModelViewSet):
 class CountryViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = CountrySerializer
-    queryset = Country.objects.all().order_by('name')
+    queryset = Country.objects.all()
 
 
 class CountryPhoneViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = CountryPhoneSerializer
-    queryset = Country.objects.all().order_by('name')
+    queryset = Country.objects.all()
 
 
 class TransportTypeViewSet(ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = TransportTypeSerializer
-    queryset = TransportType.objects.all().order_by('name')
+    queryset = TransportType.objects.all()
 
 
 class TransportMarkViewSet(ReadOnlyModelViewSet):
