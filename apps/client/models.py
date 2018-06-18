@@ -35,6 +35,9 @@ class Transport(TimeStampedMixin):
 class Order(TimeStampedMixin):
     owner = models.ForeignKey(User, models.CASCADE, related_name='order_owner')
 
+    category_id = models.IntegerField()
+    category = models.IntegerField()
+
     title = models.CharField(max_length=100)
     comment = models.CharField(max_length=100)
 
