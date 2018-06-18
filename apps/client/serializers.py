@@ -71,7 +71,7 @@ ORDER_FIELDS = ('id', 'owner',
                 'width', 'height', 'length', 'mass',
                 'image1', 'image2',
                 'payment_type', 'payment_type_name',
-                'category', 'category_name',
+                'type', 'type_name',
                 'accept_person', 'accept_person_contact',
                 'shipping_date', 'shipping_time', 'price', 'currency',
                 'offer',
@@ -88,7 +88,7 @@ class OrderSerializer(serializers.ModelSerializer):
     end_point_id = serializers.IntegerField(write_only=True)
 
     payment_type_name = serializers.ReadOnlyField(source='payment_type.name')
-    category_name = serializers.ReadOnlyField(source='category.name')
+    type_name = serializers.ReadOnlyField(source='type.name')
 
     class Meta:
         model = Order
