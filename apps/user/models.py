@@ -47,11 +47,7 @@ class User(AbstractBaseUser,
         sms_code = str(randint(0, 9999)).zfill(4)
         phone = self.phone
 
-        debug = getattr(settings, 'SMSC_DEBUG', False)
-        if debug:
-            sms_code = '1111'
-
-        if settings.DEBUG:
+        if getattr(settings, 'SMS_DEBUG', False):
             if len(phone) > 8 and phone[5:9] == "0000":
                 self.sms_code = '0000'
                 self.save()

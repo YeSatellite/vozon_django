@@ -45,38 +45,37 @@ def custom_exception_handler(exc, context):
 
 
 def sms_sender(phone, message):
-    login = getattr(settings, 'SMSC_LOGIN', None)
+    login = getattr(settings, 'SMS_LOGIN', None)
     assert login is not None
 
-    password = getattr(settings, 'SMSC_PASSWORD', None)
+    password = getattr(settings, 'SMS_PASSWORD', None)
     assert password is not None
 
-    message = 'Vozon: %s' % message
+    message = 'VozON: %s' % message
 
     payload = {
-        'login': login,
-        'psw': password,
-        'phones': phone,
-        'mes': message,
-        'fmt': 3,
+        "login": login,
+        "password": password,
+        "messages": [{
+            "phone": phone,
+            "clientId": "1",
+            "text": message
+        }]
     }
 
-    debug = getattr(settings, 'SMSC_DEBUG', False)
-    if debug:
-        payload['cost'] = '1'
-
-    r = requests.get('https://smsc.kz/sys/send.php', params=payload)
+    r = requests.post('http://api.prostor-sms.ru/messages/v2/send.json', json=payload)
 
     print(r.text)
     data = json.loads(r.text)
 
-    error_code = int(data.get('error_code', -1))
+    status = data.get('status', "tmp")
 
-    if error_code in [1, 2, 3, 4, 5, 6, 8, 9]:
+    if status != 'ok':
         raise ValidationError({"sms": ["server error"]})
 
-    if error_code in [7]:
-        raise ValidationError({"sms": ["number do not exist"]})
+    status = data['messages'][0].get('status', 'unknown error')
+    if status != 'accepted':
+        raise ValidationError({"sms": status})
 
     norm(phone + "@" + message)
     norm(">>>" + str(data) + "<<<")

@@ -132,6 +132,7 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1000),
 }
 
+# ====================ERROR_CODE==================== #
 """
 100 : 
 101 : nomer uzhe bar
@@ -150,6 +151,8 @@ ERROR_CODE = {
     ('sms', 'sms code expired'): 105,
 }
 
+
+# ====================PUSH_NOTIFICATIONS==================== #
 PUSH_NOTIFICATIONS_SETTINGS = {
     "FCM_API_KEY": "AAAAHQ7YTUk:APA91bH-CKGWikKEusPMjMTelTA"
                    "BgZxYb6q4tslhtvzHHK6UdS58EkX7823KubgAPy"
@@ -160,7 +163,7 @@ PUSH_NOTIFICATIONS_SETTINGS = {
     "APNS_USE_SANDBOX": False
 }
 
-
+# ====================LOGGING==================== #
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -220,11 +223,14 @@ LOGGING = {
     },
 }
 
-SMSC_LOGIN = 'Vozon'
-SMSC_PASSWORD = 'Darhan987'
-SMSC_DEBUG = False
+
+# ====================SMS==================== #
+SMS_LOGIN = 't87771323543'
+SMS_PASSWORD = '575168'
+SMS_DEBUG = False
 
 
+# ====================CRON==================== #
 CRON_CLASSES = [
     "apps.client.jobs.ClearOrderJob",
 ]
