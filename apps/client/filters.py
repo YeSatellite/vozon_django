@@ -19,8 +19,14 @@ class RouteFilterBackend(filters.BaseFilterBackend):
         if f(type_):
             type_ = type_.split(',')
             queryset = queryset.filter(transport__type__in=type_)
-        if f(par.get('start_point', None)):
+
+        if f(par.get('start_point_c', None)):
+            queryset = queryset.filter(start_point__region__country_id=par['start_point_c'])
+        elif f(par.get('start_point_r', None)):
+            queryset = queryset.filter(start_point__region_id=par['start_point_r'])
+        elif f(par.get('start_point', None)):
             queryset = queryset.filter(start_point_id=par['start_point'])
+
         if f(par.get('end_point', None)):
             queryset = queryset.filter(Q(end_point_id=par['end_point']) | Q(end_point__isnull=True))
         if f(par.get('start_date', None)):
