@@ -51,11 +51,31 @@ class OrderFilterBackend(filters.BaseFilterBackend):
 
         status = par.get('status', 'posted')
         if status == 'posted':
+
+            queryset_c = None
+            queryset_r = None
+            queryset__ = None
+            start_point = par.get('start_point_c', None)
+            if f(start_point):
+                start_point = start_point.split(',')
+                queryset_c = queryset.filter(start_point__region__country_id=start_point)
+            start_point = par.get('start_point_r', None)
+            if f(start_point):
+                start_point = start_point.split(',')
+                queryset_r = queryset.filter(start_point__region_id=start_point)
             start_point = par.get('start_point', None)
             if f(start_point):
                 start_point = start_point.split(',')
-                print(start_point)
-                queryset = queryset.filter(start_point_id__in=start_point)
+                queryset__ = queryset.filter(start_point_id__in=start_point)
+
+            if queryset_c or queryset_r or queryset__:
+                queryset = queryset.none()
+                if queryset_c:
+                    queryset = queryset.union(queryset_c)
+                if queryset_r:
+                    queryset = queryset.union(queryset_r)
+                if queryset__:
+                    queryset = queryset.union(queryset__)
             queryset = queryset.filter(offer=None)
             queryset = queryset.exclude(pk__in=offers_orders)
         elif status == 'active':
