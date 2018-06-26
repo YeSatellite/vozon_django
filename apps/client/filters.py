@@ -58,17 +58,17 @@ class OrderFilterBackend(filters.BaseFilterBackend):
             start_point = par.get('start_point_c', None)
             if f(start_point):
                 start_point = start_point.split(',')
-                queryset_c = queryset.filter(start_point__region__country_id=start_point)
+                queryset_c = queryset.filter(start_point__region__country_id__in=start_point)
             start_point = par.get('start_point_r', None)
             if f(start_point):
                 start_point = start_point.split(',')
-                queryset_r = queryset.filter(start_point__region_id=start_point)
+                queryset_r = queryset.filter(start_point__region_id__in=start_point)
             start_point = par.get('start_point', None)
             if f(start_point):
                 start_point = start_point.split(',')
                 queryset__ = queryset.filter(start_point_id__in=start_point)
 
-            if queryset_c or queryset_r or queryset__:
+            if not(queryset_c is None and queryset_r is None and queryset__ and None):
                 queryset = queryset.none()
                 if queryset_c:
                     queryset = queryset.union(queryset_c)
