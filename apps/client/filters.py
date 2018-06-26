@@ -68,7 +68,7 @@ class OrderFilterBackend(filters.BaseFilterBackend):
                 start_point = start_point.split(',')
                 queryset__ = queryset.filter(start_point_id__in=start_point)
 
-            if not(queryset_c is None and queryset_r is None and queryset__ and None):
+            if not(queryset_c is None and queryset_r is None and queryset__ is None):
                 queryset = queryset.none()
                 if queryset_c:
                     queryset = queryset.union(queryset_c)
