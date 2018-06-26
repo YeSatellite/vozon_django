@@ -227,7 +227,7 @@ LOGGING = {
 # ====================SMS==================== #
 SMS_LOGIN = 't87771323543'
 SMS_PASSWORD = '575168'
-SMS_DEBUG = False
+SMS_DEBUG = True
 
 
 # ====================CRON==================== #
