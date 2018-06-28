@@ -20,13 +20,30 @@ class RouteFilterBackend(filters.BaseFilterBackend):
             type_ = type_.split(',')
             queryset = queryset.filter(transport__type__in=type_)
 
-        if f(par.get('start_point_c', None)):
-            queryset = queryset.filter(start_point__region__country_id=par['start_point_c'])
-        elif f(par.get('start_point_r', None)):
-            queryset = queryset.filter(start_point__region_id=par['start_point_r'])
-        elif f(par.get('start_point', None)):
-            queryset = queryset.filter(start_point_id=par['start_point'])
+        queryset_c = None
+        queryset_r = None
+        queryset__ = None
+        start_point = par.get('start_point_c', None)
+        if f(start_point):
+            start_point = start_point.split(',')
+            queryset_c = queryset.filter(start_point__region__country_id__in=start_point)
+        start_point = par.get('start_point_r', None)
+        if f(start_point):
+            start_point = start_point.split(',')
+            queryset_r = queryset.filter(start_point__region_id__in=start_point)
+        start_point = par.get('start_point', None)
+        if f(start_point):
+            start_point = start_point.split(',')
+            queryset__ = queryset.filter(start_point_id__in=start_point)
 
+        if not (queryset_c is None and queryset_r is None and queryset__ is None):
+            queryset = queryset.none()
+            if queryset_c:
+                queryset = queryset.union(queryset_c)
+            if queryset_r:
+                queryset = queryset.union(queryset_r)
+            if queryset__:
+                queryset = queryset.union(queryset__)
         if f(par.get('end_point', None)):
             queryset = queryset.filter(Q(end_point_id=par['end_point']) | Q(end_point__isnull=True))
         if f(par.get('start_date', None)):
