@@ -7,7 +7,7 @@ https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postg
 
 postgres=# 
 CREATE DATABASE car_db;
-CREATE USER car_user WITH PASSWORD 'tHfNu6K36gJ3yqk8AmAWDD5h28wzuFs8';
+CREATE USER car_user WITH PASSWORD 'password';
 ALTER ROLE car_user SET client_encoding TO 'utf8';
 ALTER ROLE car_user SET default_transaction_isolation TO 'read committed';
 ALTER ROLE car_user SET timezone TO 'UTC';
